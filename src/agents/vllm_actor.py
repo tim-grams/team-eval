@@ -2,32 +2,38 @@ import os
 import time
 import uuid
 import asyncio
-from dataclasses import dataclass, field
-from typing import Optional
-
 import concurrent.futures
+from collections import deque
+from typing import Optional
 
 import ray
 import torch
-
-_executor = concurrent.futures.ThreadPoolExecutor(max_workers=512)
 from vllm import AsyncLLMEngine, AsyncEngineArgs
 from vllm.inputs import TextPrompt
 from vllm.sampling_params import SamplingParams
 
 from src.agents.agent import BaseAgent
 from src.utils.templates import OBSERVATION_FORMATTING, get_hf_formatter
+from src.utils.logging import setup_logger
+from src.utils.exceptions import ContextLimitExceeded
+
+_executor = concurrent.futures.ThreadPoolExecutor(max_workers=512)
 
 
 @ray.remote
 class VLLMActor:
-    def __init__(self, num_gpus: int):
+    def __init__(self, num_gpus: int, slot_id: int, log_dir: str = "logs"):
         self.num_gpus = num_gpus
+        self.slot_id = slot_id
         gpu_ids = ray.get_gpu_ids()
         os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(map(str, gpu_ids))
         self.engine: Optional[AsyncLLMEngine] = None
         self.sampling_params: Optional[SamplingParams] = None
         self.model_name: Optional[str] = None
+        self._log = setup_logger(f"vllm_actor_{slot_id + 1}", f"{log_dir}/outputs")
+        self._active: int = 0
+        self._tok_hist: deque = deque()
+        self._report_task: Optional[asyncio.Task] = None
 
     async def load_model(
         self,
@@ -40,8 +46,7 @@ class VLLMActor:
         max_tokens: int = 1024,
         gpu_memory_utilization: float = 0.85,
     ) -> None:
-        if self.engine is not None:
-            await self.unload_model()
+        if self.engine is not None: await self.unload_model()
         engine_args = AsyncEngineArgs(
             model=model_name,
             tensor_parallel_size=self.num_gpus,
@@ -61,8 +66,15 @@ class VLLMActor:
             skip_special_tokens=True,
         )
         self.model_name = model_name
+        self._report_task = asyncio.create_task(self._report_loop())
+        self._log.info("Model loaded: %s", model_name)
 
     async def unload_model(self) -> None:
+        if self._report_task is not None:
+            self._report_task.cancel()
+            try: await self._report_task
+            except asyncio.CancelledError: pass
+            self._report_task = None
         if self.engine is not None:
             self.engine.shutdown()
             del self.engine
@@ -86,72 +98,64 @@ class VLLMActor:
             skip_special_tokens=True,
         )
         request_id = str(uuid.uuid4())
-        final_output = None
-        async for output in self.engine.generate(TextPrompt(prompt=prompt), params, request_id): final_output = output
-        return final_output.outputs[0].text
+        self._active += 1
+        try:
+            final_output = None
+            prev_len = 0
+            async for output in self.engine.generate(TextPrompt(prompt=prompt), params, request_id):
+                final_output = output
+                if output.outputs:
+                    cur_len = len(output.outputs[-1].token_ids)
+                    new_toks = cur_len - prev_len
+                    prev_len = cur_len
+                    if new_toks > 0:
+                        now = time.monotonic()
+                        for _ in range(new_toks): self._tok_hist.append(now)
+            return final_output.outputs[0].text
+        finally: self._active -= 1
 
-    def ready(self) -> bool:
-        return True
+    async def _report_loop(self) -> None:
+        while True:
+            await asyncio.sleep(5.0)
+            self._log.info("processing=%d  tok/s=%.1f", self._active, self._tok_rate())
+
+    def _tok_rate(self, window: float = 5.0) -> float:
+        now = time.monotonic()
+        while self._tok_hist and now - self._tok_hist[0] > window: self._tok_hist.popleft()
+        return len(self._tok_hist) / window
+
+    def ready(self) -> bool: return True
 
 
-@dataclass
-class _Slot:
-    actor: object
-    model_name: Optional[str] = None
-    last_used: float = field(default_factory=time.monotonic)
+_MODEL_KWARGS = ("max_model_len", "max_num_seqs", "max_tokens", "gpu_memory_utilization",
+                 "temperature", "top_p", "top_k")
 
 
 class VLLMActorPool:
-    def __init__(self, num_slots: int, num_gpus_per_slot: int, **model_kwargs):
-        self._model_kwargs = model_kwargs
-        self._slots: list[_Slot] = [
-            _Slot(actor=VLLMActor.options(num_gpus=num_gpus_per_slot).remote(num_gpus_per_slot))
-            for _ in range(num_slots)
-        ]
-        self._loading: dict[str, asyncio.Event] = {}
+    def __init__(self, actors_cfg: dict, log_dir: str = "logs"):
+        self._by_model: dict[str, list] = {}
+        self._all_actors: list = []
         self._rr: dict[str, int] = {}
-        self._lock = asyncio.Lock()
+        entries = []
+        for slot_id, (actor_name, cfg) in enumerate(actors_cfg.items()):
+            num_gpus = cfg["num_gpus"]
+            model_name = cfg["model"]
+            actor = VLLMActor.options(num_gpus=num_gpus).remote(num_gpus, slot_id, log_dir)
+            kwargs = {k: cfg[k] for k in _MODEL_KWARGS if k in cfg}
+            entries.append((actor, model_name, kwargs))
+            self._all_actors.append(actor)
+        ray.get([actor.load_model.remote(model_name, **kwargs) for actor, model_name, kwargs in entries])
+        for actor, model_name, _ in entries: self._by_model.setdefault(model_name, []).append(actor)
 
     async def get_actor(self, model_name: str) -> object:
-        async with self._lock:
-            model_slots = [s for s in self._slots if s.model_name == model_name]
-            empty_slots = [s for s in self._slots if s.model_name is None]
-            if empty_slots and model_name not in self._loading:
-                target = empty_slots[0]
-                event = asyncio.Event()
-                self._loading[model_name] = event
-                loop = asyncio.get_event_loop()
-                loop.run_in_executor(None, self._load_slot, target, model_name, event, loop)
-            if model_slots:
-                idx = self._rr.get(model_name, 0) % len(model_slots)
-                self._rr[model_name] = idx + 1
-                model_slots[idx].last_used = time.monotonic()
-                return model_slots[idx].actor
-            event = self._loading[model_name]
-        await event.wait()
-        async with self._lock:
-            model_slots = [s for s in self._slots if s.model_name == model_name]
-            idx = self._rr.get(model_name, 0) % len(model_slots)
-            self._rr[model_name] = idx + 1
-            model_slots[idx].last_used = time.monotonic()
-            return model_slots[idx].actor
+        actors = self._by_model.get(model_name)
+        if not actors:
+            raise RuntimeError(f"No actor loaded for model '{model_name}'")
+        idx = self._rr.get(model_name, 0) % len(actors)
+        self._rr[model_name] = idx + 1
+        return actors[idx]
 
-    def _load_slot(
-        self,
-        slot: _Slot,
-        model_name: str,
-        event: asyncio.Event,
-        loop: asyncio.AbstractEventLoop,
-    ) -> None:
-        try:
-            ray.get(slot.actor.load_model.remote(model_name, **self._model_kwargs))
-            slot.model_name = model_name
-            slot.last_used = time.monotonic()
-        finally:
-            self._loading.pop(model_name, None)
-            loop.call_soon_threadsafe(event.set)
-
-    def status(self) -> list[dict]: return [{"slot": i, "model": s.model_name, "last_used": s.last_used} for i, s in enumerate(self._slots)]
+    def all_actors(self) -> list: return self._all_actors
 
 
 class VLLMActorAgent(BaseAgent):
@@ -196,15 +200,19 @@ class VLLMActorAgent(BaseAgent):
         full_prompt = self._fmt(f"{self.system_prompt}\n\n{prompt}" if self.system_prompt else prompt)
         actor = await self._resolve_actor()
         loop = asyncio.get_event_loop()
-        completion = await loop.run_in_executor(
-            _executor,
-            ray.get,
-            actor.submit_prompt.remote(
-                full_prompt,
-                temperature=self.temperature,
-                top_p=self.top_p,
-                top_k=self.top_k,
-                max_tokens=self.max_tokens,
-            ),
-        )
+        try:
+            completion = await loop.run_in_executor(
+                _executor,
+                ray.get,
+                actor.submit_prompt.remote(
+                    full_prompt,
+                    temperature=self.temperature,
+                    top_p=self.top_p,
+                    top_k=self.top_k,
+                    max_tokens=self.max_tokens,
+                ),
+            )
+        except Exception as e:
+            if "VLLMValidationError" in type(e).__name__ or "input tokens" in str(e): raise ContextLimitExceeded(str(e)) from e
+            raise
         return full_prompt, completion

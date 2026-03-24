@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Eval</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #fffff8;
+  --text:     #1a1a1a;
+  --muted:    #888;
+  --border:   #ddd8c8;
+  --hover:    #f5f0e3;
+  --selected: #e8e2d0;
+  --accent:   #6b3a2a;
+  --win:      #1e5c14;
+  --loss:     #7a1a1a;
+}
+
+body {
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Header ── */
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 1.2rem 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+nav { display: flex; }
+
+.tab {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+.tab:hover  { color: var(--text); }
+.tab.active { color: var(--text); border-bottom-color: var(--accent); }
+
+/* ── Main ── */
+main { padding: 1.5rem 2rem; }
+.hidden { display: none !important; }
+
+/* ── Leaderboard ── */
+.lb-block { margin-bottom: 2.5rem; }
+
+.lb-block h2 {
+  font-size: 0.8rem;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+
+.stat {
+  padding: 0.65rem 1.1rem;
+  border: 1px solid var(--border);
+  background: var(--hover);
+  min-width: 110px;
+}
+.stat .val { font-size: 1.6rem; color: var(--accent); line-height: 1.2; }
+.stat .lbl { font-size: 0.73rem; color: var(--muted); letter-spacing: 0.04em; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+
+th {
+  text-align: left;
+  padding: 0.4rem 0.8rem;
+  border-bottom: 2px solid var(--border);
+  font-weight: normal;
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+td { padding: 0.45rem 0.8rem; border-bottom: 1px solid #eee8d8; }
+tr:hover td { background: var(--hover); }
+
+.w { color: var(--win); }
+.l { color: var(--loss); }
+.d { color: var(--muted); }
+
+/* ── Games browser ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1rem;
+  height: calc(100vh - 110px);
+}
+
+.panel { border: 1px solid var(--border); overflow-y: auto; }
+
+/* ── Game list ── */
+.game-row {
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid #eee8d8;
+  cursor: pointer;
+  font-size: 0.84rem;
+}
+.game-row:hover    { background: var(--hover); }
+.game-row.selected { background: var(--selected); }
+.gr-top  { margin-bottom: 0.1rem; }
+.gr-meta { color: var(--muted); font-size: 0.75rem; }
+
+/* ── Game detail panel ── */
+.game-detail-panel {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-hdr {
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.game-hdr h2 { font-size: 0.98rem; font-weight: normal; margin-bottom: 0.3rem; }
+.game-hdr .meta { color: var(--muted); font-size: 0.79rem; }
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.72rem;
+  border: 1px solid;
+  margin-right: 0.3rem;
+  vertical-align: middle;
+}
+.b-win  { color: var(--win);   border-color: var(--win); }
+.b-loss { color: var(--loss);  border-color: var(--loss); }
+.b-draw { color: var(--muted); border-color: var(--muted); }
+
+/* ── Turns area ── */
+.turns-area {
+  flex: 1;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  min-height: 0;
+}
+
+.turns-area.full {
+  grid-template-rows: 1fr;
+}
+
+.turns-list { overflow-y: auto; padding: 0.3rem 0; }
+
+.turn-row {
+  padding: 0.35rem 1rem;
+  cursor: pointer;
+  font-size: 0.83rem;
+  border-bottom: 1px solid #f0eade;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.turn-row:hover    { background: var(--hover); }
+.turn-row.selected { background: var(--selected); }
+
+.tn { color: var(--muted); font-size: 0.72rem; min-width: 24px; text-align: right; flex-shrink: 0; }
+.tt { color: var(--muted); min-width: 55px; font-size: 0.78rem; flex-shrink: 0; }
+.ta { font-family: Georgia, serif; flex-shrink: 0; }
+
+/* ── TicTacToe board ── */
+.ttt-board {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 22px);
+  flex-shrink: 0;
+}
+
+.ttt-cell {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+}
+
+.ttt-x   { color: var(--loss); }
+.ttt-o   { color: var(--win); }
+.ttt-hl-o { background: #d4edda; }
+.ttt-hl-x { background: #f8d7da; }
+
+/* ── ConnectFour board ── */
+.c4-board {
+  display: inline-grid;
+  grid-template-columns: repeat(7, 17px);
+  flex-shrink: 0;
+}
+.c4-cell {
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.58rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+}
+.c4-board-lg {
+  display: inline-grid;
+  grid-template-columns: repeat(7, 36px);
+}
+.c4-cell-lg {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+  border-radius: 50%;
+}
+.c4-x    { color: var(--loss); }
+.c4-o    { color: #b8860b; }
+.c4-hl-x { background: #f8d7da; }
+.c4-hl-o { background: #fff3cd; }
+
+/* ── Breakthrough board ── */
+.bt-board    { display: inline-grid; flex-shrink: 0; }
+.bt-board-lg { display: inline-grid; }
+.bt-cell {
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+}
+.bt-cell-lg {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+}
+.bt-w           { background: #f0e8c8; color: var(--text); }
+.bt-b           { background: #2a2018; color: #e8e0d0; }
+.bt-hl          { background: #d4edda !important; color: var(--text) !important; }
+
+/* ── Judge verdict ── */
+.judge-verdict {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--accent);
+  margin-bottom: 1rem;
+  background: #fdf6f0;
+}
+
+.judge-verdict-label {
+  font-size: 0.7rem;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.judge-verdict-action {
+  font-family: Georgia, serif;
+  background: var(--hover);
+  padding: 0.1rem 0.35rem;
+  font-size: 0.85rem;
+  margin-right: 0.4rem;
+}
+
+.judge-verdict-just {
+  font-size: 0.84rem;
+  color: #333;
+  margin-top: 0.3rem;
+  padding-left: 0.4rem;
+  border-left: 2px solid var(--accent);
+}
+
+/* ── Debate panel ── */
+.debate-panel {
+  border-top: 2px solid var(--border);
+  overflow-y: auto;
+  padding: 0.9rem 1.2rem;
+}
+
+.debate-panel > h3 {
+  font-size: 0.75rem;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+.d-round {
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border);
+  margin-bottom: 0.9rem;
+}
+
+.d-round h4 {
+  font-size: 0.71rem;
+  font-weight: normal;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.d-entry { margin-bottom: 0.6rem; font-size: 0.84rem; }
+.d-name  { font-style: italic; color: var(--accent); margin-right: 0.3rem; }
+
+.d-prop {
+  font-family: Georgia, serif;
+  background: var(--hover);
+  padding: 0.1rem 0.35rem;
+  font-size: 0.8rem;
+  margin-right: 0.3rem;
+}
+
+.d-just {
+  color: #333;
+  font-size: 0.82rem;
+  margin-top: 0.2rem;
+  padding-left: 0.4rem;
+  border-left: 1px solid var(--border);
+}
+
+.prompt-btn {
+  font-size: 0.71rem;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-top: 0.3rem;
+  display: inline-block;
+  user-select: none;
+}
+
+.prompt-box {
+  display: none;
+  font-family: "Courier New", monospace;
+  font-size: 0.68rem;
+  white-space: pre-wrap;
+  background: #f6f2e8;
+  border: 1px solid var(--border);
+  padding: 0.45rem;
+  margin-top: 0.3rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.prompt-box.open { display: block; }
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+  padding: 1rem;
+  font-size: 0.88rem;
+}
+
+
+/* ── Modal ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  max-width: 700px;
+  width: 92%;
+  max-height: 84vh;
+  overflow-y: auto;
+  padding: 1.4rem 1.6rem;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--muted);
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+}
+.modal-close:hover { color: var(--text); }
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  padding-right: 1.5rem;
+}
+
+.modal-board-wrap {
+  flex-shrink: 0;
+}
+
+.modal-board-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.ttt-board-lg {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 42px);
+}
+
+.ttt-cell-lg {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  margin: -1px 0 0 -1px;
+}
+
+.modal-turn-info { flex: 1; }
+.modal-turn-title {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 0.25rem;
+}
+.modal-turn-meta { font-size: 0.8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Team Eval</h1>
+  <nav id="nav"></nav>
+</header>
+
+<main id="main">
+
+  <!-- ── Leaderboard ── -->
+  <section id="view-lb">
+    <div class="lb-block">
+      <h2>Total</h2>
+      <div class="stats-row" id="lb-total-stats"></div>
+      <table><thead><tr>
+        <th>#</th><th>Team</th><th>ELO</th><th>Games</th>
+        <th>Won</th><th>Lost</th><th>Draw</th><th>Win %</th><th>Inv %</th>
+      </tr></thead><tbody id="lb-total-body"></tbody></table>
+    </div>
+    <div id="lb-env-blocks"></div>
+  </section>
+
+</main>
+
+<!-- ── Debate modal ── -->
+<div class="modal-overlay hidden" id="debate-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+/* ─── API ─── */
+const api = {
+  results:    () => fetch('/api/results').then(r => r.json()),
+  ratings:    () => fetch('/api/ratings').then(r => r.json()),
+  envs:       () => fetch('/api/envs').then(r => r.json()),
+  envRatings: key => fetch(`/api/ratings/${encodeURIComponent(key)}`).then(r => r.json()),
+  games:      () => fetch('/api/games').then(r => r.json()),
+  game:       id => fetch(`/api/games/${encodeURIComponent(id)}`).then(r => r.json()),
+};
+
+/* ─── State ─── */
+let results = [], games = [], ratings = {}, gameCache = {};
+let envs = [];                        // [{name, key}]
+const envRatings = {};                // key → {ratings, ci}
+const selected   = {};
+const initialized = new Set();
+let allTabs = ['lb'];                 // maintained as tabs are added
+
+
+/* ─── Boot ─── */
+async function init() {
+  [results, games, ratings, envs] = await Promise.all([
+    api.results(), api.games(), api.ratings(), api.envs(),
+  ]);
+
+  // Fetch per-env ratings
+  await Promise.all(envs.map(async e => {
+    envRatings[e.key] = await api.envRatings(e.key);
+  }));
+
+  // Build nav tab for leaderboard
+  const nav = document.getElementById('nav');
+  const lbTab = document.createElement('a');
+  lbTab.href = '#'; lbTab.className = 'tab active'; lbTab.id = 'tab-lb';
+  lbTab.textContent = 'Leaderboard';
+  lbTab.addEventListener('click', e => { e.preventDefault(); showTab('lb'); });
+  nav.appendChild(lbTab);
+
+  // Build per-env leaderboard blocks, tabs, and game sections
+  const lbEnvBlocks = document.getElementById('lb-env-blocks');
+  const main = document.getElementById('main');
+  for (const env of envs) {
+    const k = env.key;
+    allTabs.push(k);
+    selected[k] = null;
+
+    // Nav tab
+    const tab = document.createElement('a');
+    tab.href = '#'; tab.className = 'tab'; tab.id = `tab-${k}`;
+    tab.textContent = env.name;
+    tab.addEventListener('click', e => { e.preventDefault(); showTab(k); });
+    nav.appendChild(tab);
+
+    // Leaderboard block inside view-lb
+    lbEnvBlocks.insertAdjacentHTML('beforeend', `
+      <div class="lb-block">
+        <h2>${esc(env.name)}</h2>
+        <div class="stats-row" id="lb-${k}-stats"></div>
+        <table><thead><tr>
+          <th>#</th><th>Team</th><th>ELO</th><th>Games</th>
+          <th>Won</th><th>Lost</th><th>Draw</th><th>Win %</th><th>Inv %</th>
+        </tr></thead><tbody id="lb-${k}-body"></tbody></table>
+      </div>`);
+
+    // Games section
+    main.insertAdjacentHTML('beforeend', `
+      <section id="view-${k}" class="hidden">
+        <div class="two-col">
+          <div class="panel" id="${k}-list"></div>
+          <div class="panel game-detail-panel" id="${k}-detail">
+            <div class="empty">Select a game to view details.</div>
+          </div>
+        </div>
+      </section>`);
+  }
+
+  renderLeaderboard(null, 'lb-total-stats', 'lb-total-body', ratings);
+  for (const env of envs) {
+    renderLeaderboard(env.name, `lb-${env.key}-stats`, `lb-${env.key}-body`, envRatings[env.key] || {});
+  }
+
+  document.getElementById('debate-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+}
+
+/* ─── Tab switching ─── */
+function showTab(name) {
+  allTabs.forEach(n => {
+    document.getElementById(`tab-${n}`).classList.toggle('active', n === name);
+    document.getElementById(`view-${n}`).classList.toggle('hidden', n !== name);
+  });
+
+  if (name !== 'lb' && !initialized.has(name)) {
+    const env = envs.find(e => e.key === name);
+    renderGamesList(name, env ? env.name : name, `${name}-list`, `${name}-detail`);
+    initialized.add(name);
+  }
+}
+
+/* ─── Filtering ─── */
+function filteredResults(envName) {
+  if (!envName) return results;
+  return results.filter(r => r.env === envName);
+}
+
+function filteredGames(envName) {
+  if (!envName) return games;
+  const ids = new Set(filteredResults(envName).map(r => r.timestamp));
+  return games.filter(id => ids.has(id));
+}
+
+/* ─── Leaderboard ─── */
+function computeLB(rows, ratingsData) {
+  const teams = {};
+  for (const r of rows) {
+    for (const tn of [r.team0, r.team1]) {
+      if (!teams[tn]) teams[tn] = { games: 0, wins: 0, losses: 0, draws: 0, invalid: 0, elo: ratingsData?.ratings?.[tn] ?? 1000, ci: ratingsData?.ci?.[tn] ?? null };
+      const t = teams[tn];
+      t.games++;
+      if      (r.winner === tn)                  t.wins++;
+      else if (!r.winner || r.winner === 'draw') t.draws++;
+      else                                       t.losses++;
+      if (r.invalid_move === tn)                 t.invalid++;
+    }
+  }
+  return Object.entries(teams)
+    .map(([name, t]) => ({ name, ...t, wr: t.games ? t.wins / t.games : 0 }))
+    .sort((a, b) => b.elo - a.elo);
+}
+
+function renderLeaderboard(envName, statsId, bodyId, ratingsData) {
+  const rows = filteredResults(envName);
+  const lb   = computeLB(rows, ratingsData);
+
+  document.getElementById(statsId).innerHTML =
+    stat(rows.length, 'Games') + stat(lb.length, 'Teams');
+
+  document.getElementById(bodyId).innerHTML = lb.length
+    ? lb.map((t, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${esc(t.name)}</td>
+          <td><strong>${t.elo.toFixed(0)}</strong>${t.ci ? ` <span style="color:var(--muted);font-size:0.8em">(${t.ci[0].toFixed(0)}, ${t.ci[1].toFixed(0)})</span>` : ''}</td>
+          <td>${t.games}</td>
+          <td class="w">${t.wins}</td>
+          <td class="l">${t.losses}</td>
+          <td class="d">${t.draws}</td>
+          <td>${(t.wr * 100).toFixed(1)}%</td>
+          <td class="${t.invalid > 0 ? 'l' : ''}">${t.invalid > 0 ? (t.invalid / t.games * 100).toFixed(1) + '%' : '—'}</td>
+        </tr>`).join('')
+    : `<tr><td colspan="9" class="empty" style="padding:0.6rem 0.8rem">No data.</td></tr>`;
+}
+
+function stat(val, lbl) {
+  return `<div class="stat"><div class="val">${val}</div><div class="lbl">${lbl}</div></div>`;
+}
+
+/* ─── Games list ─── */
+function fmtTs(ts) {
+  const [d, t] = ts.split('_');
+  return `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)} `
+       + `${t.slice(0,2)}:${t.slice(2,4)}:${t.slice(4,6)}`;
+}
+
+function renderGamesList(ctx, envName, listId, detailId) {
+  const el   = document.getElementById(listId);
+  const gids = filteredGames(envName);
+
+  if (!gids.length) {
+    el.innerHTML = '<div class="empty">No games found.</div>';
+    return;
+  }
+
+  const byTs = Object.fromEntries(results.map(r => [r.timestamp, r]));
+
+  el.innerHTML = gids.map(id => {
+    const r   = byTs[id] || {};
+    const won = r.winner && r.winner !== 'draw';
+    const res = r.winner ? (r.winner === 'draw' ? 'draw' : `${esc(r.winner)} won`) : '—';
+    const cls = won ? 'w' : (r.winner === 'draw' ? 'd' : '');
+    return `<div class="game-row" data-id="${esc(id)}" data-ctx="${ctx}">
+      <div class="gr-top">${esc(r.team0 || '?')} <span style="color:var(--muted)">vs</span> ${esc(r.team1 || '?')}</div>
+      <div class="gr-meta">${fmtTs(id)} · <span class="${cls}">${res}</span> · ${r.num_turns || '?'} turns</div>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('.game-row').forEach(row =>
+    row.addEventListener('click', () => selectGame(row.dataset.ctx, row.dataset.id))
+  );
+}
+
+/* ─── Game detail ─── */
+async function selectGame(ctx, id) {
+  selected[ctx] = id;
+
+  document.getElementById(`${ctx}-list`).querySelectorAll('.game-row').forEach(r =>
+    r.classList.toggle('selected', r.dataset.id === id)
+  );
+
+  const det = document.getElementById(`${ctx}-detail`);
+  det.innerHTML = '<div class="empty">Loading…</div>';
+
+  if (!gameCache[id]) gameCache[id] = await api.game(id);
+  renderGame(gameCache[id], id, `${ctx}-detail`);
+}
+
+/* ─── TicTacToe board helpers ─── */
+function parseTTTBoard(prompt) {
+  const match = prompt.match(/Current Board:\n\n([\s\S]*?)\n\nAvailable/);
+  if (!match) return null;
+  const boardStr = match[1];
+  const rows = boardStr.split('\n---+---+---\n');
+  if (rows.length !== 3) return null;
+  const cells = [];
+  for (const row of rows) {
+    const parts = row.trim().split('|').map(p => p.trim());
+    if (parts.length !== 3) return null;
+    cells.push(...parts);
+  }
+  return cells; // 9 strings: 'O', 'X', or a digit string
+}
+
+function renderTTTBoardMini(cells, highlightIdx, piece) {
+  const hlClass = piece === 'O' ? 'ttt-hl-o' : 'ttt-hl-x';
+  const html = cells.map((c, i) => {
+    const isX = c === 'X';
+    const isO = c === 'O';
+    const isHL = i === highlightIdx;
+    // Show the piece being placed in the highlighted (empty) cell
+    const displayPiece = isHL ? piece : (isO ? 'O' : (isX ? 'X' : ''));
+    const cls = [
+      'ttt-cell',
+      isX || (isHL && piece === 'X') ? 'ttt-x' : '',
+      isO || (isHL && piece === 'O') ? 'ttt-o' : '',
+      isHL ? hlClass : '',
+    ].filter(Boolean).join(' ');
+    return `<div class="${cls}">${esc(displayPiece)}</div>`;
+  }).join('');
+  return `<div class="ttt-board">${html}</div>`;
+}
+
+function renderTTTBoardLarge(cells, highlightIdx, piece) {
+  const hlClass = piece === 'O' ? 'ttt-hl-o' : 'ttt-hl-x';
+  const html = cells.map((c, i) => {
+    const isX = c === 'X';
+    const isO = c === 'O';
+    const isHL = i === highlightIdx;
+    const displayPiece = isHL ? piece : (isO ? 'O' : (isX ? 'X' : ''));
+    const cls = [
+      'ttt-cell-lg',
+      isX || (isHL && piece === 'X') ? 'ttt-x' : '',
+      isO || (isHL && piece === 'O') ? 'ttt-o' : '',
+      isHL ? hlClass : '',
+    ].filter(Boolean).join(' ');
+    return `<div class="${cls}">${esc(displayPiece)}</div>`;
+  }).join('');
+  return `<div class="ttt-board-lg">${html}</div>`;
+}
+
+/* ─── ConnectFour board helpers ─── */
+function parseC4Board(prompt) {
+  const match = prompt.match(/Board state:\n0 1 2 3 4 5 6\n-------------\n([\s\S]*?)(?:\n\n|$)/);
+  if (!match) return null;
+  const lines = match[1].trim().split('\n');
+  if (lines.length !== 6) return null;
+  const cells = [];
+  for (const line of lines) {
+    const parts = line.trim().split(' ');
+    if (parts.length !== 7) return null;
+    cells.push(...parts);
+  }
+  return cells; // 42 cells row-major, row 0 = top
+}
+
+function c4LandingIdx(cells, col) {
+  for (let row = 5; row >= 0; row--) {
+    if (cells[row * 7 + col] === '.') return row * 7 + col;
+  }
+  return -1;
+}
+
+function renderC4Board(cells, landingIdx, piece, cellCls, boardCls) {
+  const hlClass = piece === 'X' ? 'c4-hl-x' : 'c4-hl-o';
+  const html = cells.map((c, i) => {
+    const isX = c === 'X', isO = c === 'O', isHL = i === landingIdx;
+    const display = isHL ? piece : (isO ? 'O' : (isX ? 'X' : ''));
+    const cls = [cellCls,
+      isX || (isHL && piece === 'X') ? 'c4-x' : '',
+      isO || (isHL && piece === 'O') ? 'c4-o' : '',
+      isHL ? hlClass : '',
+    ].filter(Boolean).join(' ');
+    return `<div class="${cls}">${esc(display)}</div>`;
+  }).join('');
+  return `<div class="${boardCls}">${html}</div>`;
+}
+
+function renderC4BoardMini(cells, landingIdx, piece) {
+  return renderC4Board(cells, landingIdx, piece, 'c4-cell', 'c4-board');
+}
+function renderC4BoardLarge(cells, landingIdx, piece) {
+  return renderC4Board(cells, landingIdx, piece, 'c4-cell-lg', 'c4-board-lg');
+}
+
+/* ─── Breakthrough board helpers ─── */
+function parseBreakthroughBoard(prompt) {
+  const rowMatches = [...prompt.matchAll(/^\s*(\d+)\s*\|\s*([A-Z. ]+)/gm)];
+  if (!rowMatches.length) return null;
+  const rowData = rowMatches.map(m => ({
+    rowNum: parseInt(m[1]),
+    cells: m[2].trim().split(/\s+/),
+  }));
+  rowData.sort((a, b) => b.rowNum - a.rowNum); // top row first
+  const maxRow = rowData[0].rowNum;
+  const cols = rowData[0].cells.length;
+  return { cells: rowData.flatMap(r => r.cells), rows: rowData.length, cols, maxRow };
+}
+
+function breakthroughToIdx(action, rows, cols, maxRow) {
+  const m = action.match(/([a-h])(\d+)([a-h])(\d+)/);
+  if (!m) return -1;
+  const toCol = m[3].charCodeAt(0) - 97;
+  const toRow = maxRow - parseInt(m[4]); // 0-indexed from top
+  return toRow * cols + toCol;
+}
+
+function renderBreakthroughBoard(data, toIdx, piece, cellCls, boardCls) {
+  const html = data.cells.map((c, i) => {
+    const isHL = i === toIdx;
+    const display = isHL ? piece : (c === '.' ? '' : c);
+    const cls = [cellCls, c === 'W' ? 'bt-w' : c === 'B' ? 'bt-b' : '', isHL ? 'bt-hl' : '']
+      .filter(Boolean).join(' ');
+    return `<div class="${cls}">${esc(display)}</div>`;
+  }).join('');
+  return `<div class="${boardCls}" style="grid-template-columns:repeat(${data.cols},${boardCls === 'bt-board' ? '17px' : '36px'})">${html}</div>`;
+}
+
+function renderBreakthroughBoardMini(data, toIdx, piece) {
+  return renderBreakthroughBoard(data, toIdx, piece, 'bt-cell', 'bt-board');
+}
+function renderBreakthroughBoardLarge(data, toIdx, piece) {
+  return renderBreakthroughBoard(data, toIdx, piece, 'bt-cell-lg', 'bt-board-lg');
+}
+
+/* ─── Game render ─── */
+function renderGame(g, id, detailId) {
+  const isTTT          = g.env_name.toLowerCase().includes('tictactoe');
+  const isC4           = g.env_name.toLowerCase().includes('connectfour');
+  const isBreakthrough = g.env_name.toLowerCase().includes('breakthrough');
+
+  const teams = Object.entries(g.teams).map(([name]) => ({
+    name, elo: g.final_ratings[name],
+  }));
+
+  const winBadge  = g.winner
+    ? `<span class="badge b-win">${esc(g.winner)} won</span>`
+    : `<span class="badge b-draw">Draw</span>`;
+  const forfBadge = g.forfeit
+    ? `<span class="badge b-loss">Forfeit: ${esc(g.forfeit)}</span>` : '';
+  const invBadge  = g.invalid_move
+    ? `<span class="badge b-loss">Invalid move: ${esc(g.invalid_move)}</span>` : '';
+
+  const teamLine = teams
+    .map(t => `${esc(t.name)} <span style="color:var(--muted);font-size:0.82em">${t.elo.toFixed(0)}</span>`)
+    .join(' <span style="color:var(--muted)">vs</span> ');
+
+  // Build team→piece map (TTT: pid0='O'; C4: pid0='X'; Breakthrough: pid0='W')
+  const teamPiece = {};
+  for (const turn of g.turns) {
+    if (!(turn.team in teamPiece)) {
+      if (isC4)           teamPiece[turn.team] = turn.player_id === 0 ? 'X' : 'O';
+      else if (isBreakthrough) teamPiece[turn.team] = turn.player_id === 0 ? 'W' : 'B';
+      else                teamPiece[turn.team] = turn.player_id === 0 ? 'O' : 'X';
+    }
+  }
+
+  const turnsHtml = g.turns.map((t, i) => {
+    const piece = teamPiece[t.team] || (isC4 ? 'X' : 'O');
+    if (isTTT && t.transcript.length > 0) {
+      const board = parseTTTBoard(t.transcript[0].prompt);
+      const actionIdx = parseInt(t.action.replace(/\D/g, ''), 10);
+      const boardHtml = board ? renderTTTBoardMini(board, actionIdx, piece) : '';
+      return `<div class="turn-row" data-idx="${i}" title="Click to view debate">
+        <span class="tn">${i + 1}</span>
+        <span class="tt">${esc(t.team)}</span>
+        ${boardHtml}
+        <span class="ta">${esc(t.action)}</span>
+      </div>`;
+    } else if (isC4 && t.transcript.length > 0) {
+      const board = parseC4Board(t.transcript[0].prompt);
+      const col = parseInt(t.action.match(/\[col (\d+)\]/)?.[1] ?? '-1', 10);
+      const landingIdx = board && col >= 0 ? c4LandingIdx(board, col) : -1;
+      const boardHtml = board ? renderC4BoardMini(board, landingIdx, piece) : '';
+      return `<div class="turn-row" data-idx="${i}" title="Click to view debate">
+        <span class="tn">${i + 1}</span>
+        <span class="tt">${esc(t.team)}</span>
+        ${boardHtml}
+        <span class="ta">${esc(t.action)}</span>
+      </div>`;
+    } else if (isBreakthrough && t.transcript.length > 0) {
+      const bd = parseBreakthroughBoard(t.transcript[0].prompt);
+      const toIdx = bd ? breakthroughToIdx(t.action, bd.rows, bd.cols, bd.maxRow) : -1;
+      const boardHtml = bd ? renderBreakthroughBoardMini(bd, toIdx, piece) : '';
+      return `<div class="turn-row" data-idx="${i}" title="Click to view debate">
+        <span class="tn">${i + 1}</span>
+        <span class="tt">${esc(t.team)}</span>
+        ${boardHtml}
+        <span class="ta">${esc(t.action)}</span>
+      </div>`;
+    } else {
+      return `<div class="turn-row" data-idx="${i}">
+        <span class="tn">${i + 1}</span>
+        <span class="tt">${esc(t.team)}</span>
+        <span class="ta">${esc(t.action)}</span>
+      </div>`;
+    }
+  }).join('');
+
+  const debatePanelHtml = (isTTT || isC4 || isBreakthrough)
+    ? `<div style="padding:0.6rem 1.2rem;font-size:0.78rem;color:var(--muted);font-style:italic;border-top:1px solid var(--border)">Click a step to view the team debate.</div>`
+    : `<div class="debate-panel"><div class="empty" style="padding:0.4rem">Select a turn to view the debate.</div></div>`;
+
+  document.getElementById(detailId).innerHTML = `
+    <div class="game-hdr">
+      <div class="meta">${fmtTs(id)} · ${esc(g.env_name)}</div>
+      <h2>${teamLine}</h2>
+      <div style="margin-top:0.4rem">
+        ${winBadge}${forfBadge}${invBadge}
+        <span style="font-size:0.78rem;color:var(--muted)">${g.turns.length} turns</span>
+      </div>
+      ${g.reason ? `<div style="font-size:0.78rem;color:var(--muted);margin-top:0.3rem;font-style:italic">${esc(g.reason)}</div>` : ''}
+    </div>
+    <div class="turns-area${(isTTT || isC4 || isBreakthrough) ? ' full' : ''}">
+      <div class="turns-list">${turnsHtml}</div>
+      ${debatePanelHtml}
+    </div>`;
+
+  const debatePanel = document.getElementById(detailId).querySelector('.debate-panel');
+
+  document.getElementById(detailId).querySelectorAll('.turn-row').forEach(row =>
+    row.addEventListener('click', () => {
+      document.getElementById(detailId).querySelectorAll('.turn-row')
+        .forEach(r => r.classList.remove('selected'));
+      row.classList.add('selected');
+      const turn = g.turns[+row.dataset.idx];
+      if (isTTT || isC4 || isBreakthrough) {
+        openDebateModal(turn, teamPiece, g, isC4, isBreakthrough);
+      } else {
+        renderDebate(turn, debatePanel);
+      }
+    })
+  );
+}
+
+/* ─── Modal ─── */
+function openDebateModal(turn, teamPiece, game, isC4 = false, isBreakthrough = false) {
+  let boardHtml = '';
+  if (isC4) {
+    const board = turn.transcript.length > 0 ? parseC4Board(turn.transcript[0].prompt) : null;
+    const col = parseInt(turn.action.match(/\[col (\d+)\]/)?.[1] ?? '-1', 10);
+    const landingIdx = board && col >= 0 ? c4LandingIdx(board, col) : -1;
+    const piece = (teamPiece && teamPiece[turn.team]) || (turn.player_id === 0 ? 'X' : 'O');
+    if (board) boardHtml = `<div class="modal-board-wrap">
+        <div class="modal-board-label">Board state</div>
+        ${renderC4BoardLarge(board, landingIdx, piece)}
+      </div>`;
+  } else if (isBreakthrough) {
+    const bd = turn.transcript.length > 0 ? parseBreakthroughBoard(turn.transcript[0].prompt) : null;
+    const piece = (teamPiece && teamPiece[turn.team]) || (turn.player_id === 0 ? 'W' : 'B');
+    const toIdx = bd ? breakthroughToIdx(turn.action, bd.rows, bd.cols, bd.maxRow) : -1;
+    if (bd) boardHtml = `<div class="modal-board-wrap">
+        <div class="modal-board-label">Board state</div>
+        ${renderBreakthroughBoardLarge(bd, toIdx, piece)}
+      </div>`;
+  } else {
+    const board = turn.transcript.length > 0 ? parseTTTBoard(turn.transcript[0].prompt) : null;
+    const actionIdx = parseInt(turn.action.replace(/\D/g, ''), 10);
+    const piece = (teamPiece && teamPiece[turn.team]) || (turn.player_id === 0 ? 'O' : 'X');
+    if (board) boardHtml = `<div class="modal-board-wrap">
+        <div class="modal-board-label">Board state</div>
+        ${renderTTTBoardLarge(board, actionIdx, piece)}
+      </div>`;
+  }
+
+  const judgeEntry = turn.transcript.find(e => e.role === 'judge');
+  const debateEntries = turn.transcript.filter(e => e.role !== 'judge');
+
+  const judgeHtml = judgeEntry ? `
+    <div class="judge-verdict">
+      <div class="judge-verdict-label">Judge's verdict</div>
+      <div>
+        <span class="d-name">${esc(judgeEntry.agent_name)}</span>
+        <span class="judge-verdict-action">${esc(judgeEntry.proposal)}</span>
+      </div>
+      ${judgeEntry.justification ? `<div class="judge-verdict-just">${esc(judgeEntry.justification)}</div>` : ''}
+      <span class="prompt-btn" onclick="togglePrompt('judge-prompt-${esc(judgeEntry.agent_id)}')">show prompt</span>
+      <div class="prompt-box" id="judge-prompt-${esc(judgeEntry.agent_id)}">${esc(judgeEntry.prompt)}</div>
+    </div>` : '';
+
+  const rounds = {};
+  for (const e of debateEntries) (rounds[e.round] ??= []).push(e);
+
+  const debateHtml = Object.entries(rounds).map(([r, entries]) => `
+    <div class="d-round">
+      <h4>Round ${r}</h4>
+      ${entries.map((e, i) => {
+        const uid = `p-${r}-${i}-${Math.random().toString(36).slice(2, 8)}`;
+        return `<div class="d-entry">
+          <span class="d-name">${esc(e.agent_name)}</span><span class="d-prop">${esc(e.proposal)}</span>
+          ${e.justification ? `<div class="d-just">${esc(e.justification)}</div>` : ''}
+          <span class="prompt-btn" onclick="togglePrompt('${uid}')">show prompt</span>
+          <div class="prompt-box" id="${uid}">${esc(e.prompt)}</div>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+
+  let outcomeHtml = '';
+  if (game) {
+    const outcomeLabel = game.winner
+      ? `<span class="badge b-win">${esc(game.winner)} won</span>`
+      : `<span class="badge b-draw">Draw</span>`;
+    const forfeit = game.forfeit
+      ? `<span class="badge b-loss">Forfeit: ${esc(game.forfeit)}</span>` : '';
+    const invalid = game.invalid_move
+      ? `<span class="badge b-loss">Invalid move: ${esc(game.invalid_move)}</span>` : '';
+    outcomeHtml = `
+      <div style="margin-top:1.4rem;padding-top:1rem;border-top:2px solid var(--border)">
+        <div style="font-size:0.75rem;font-weight:normal;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem">Game outcome</div>
+        <div style="margin-bottom:0.35rem">${outcomeLabel}${forfeit}${invalid}</div>
+        ${game.reason ? `<div style="font-size:0.84rem;color:#444;font-style:italic">${esc(game.reason)}</div>` : ''}
+      </div>`;
+  }
+
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-header">
+      ${boardHtml}
+      <div class="modal-turn-info">
+        <div class="modal-turn-title">${esc(turn.team)} · action <span style="font-family:Georgia,serif">${esc(turn.action)}</span></div>
+        <div class="modal-turn-meta">${turn.transcript.length} agent response${turn.transcript.length !== 1 ? 's' : ''} · ${Object.keys(rounds).length} round${Object.keys(rounds).length !== 1 ? 's' : ''}</div>
+      </div>
+    </div>
+    ${judgeHtml}
+    <h3 style="font-size:0.75rem;font-weight:normal;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:0.8rem">Debate</h3>
+    ${debateHtml}
+    ${outcomeHtml}`;
+
+  document.getElementById('debate-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('debate-modal').classList.add('hidden');
+}
+
+/* ─── Debate (non-TTT inline panel) ─── */
+function renderDebate(turn, panel) {
+  const judgeEntry = turn.transcript.find(e => e.role === 'judge');
+  const debateEntries = turn.transcript.filter(e => e.role !== 'judge');
+
+  const judgeHtml = judgeEntry ? `
+    <div class="judge-verdict" style="margin-bottom:0.8rem">
+      <div class="judge-verdict-label">Judge's verdict</div>
+      <div>
+        <span class="d-name">${esc(judgeEntry.agent_name)}</span>
+        <span class="judge-verdict-action">${esc(judgeEntry.proposal)}</span>
+      </div>
+      ${judgeEntry.justification ? `<div class="judge-verdict-just">${esc(judgeEntry.justification)}</div>` : ''}
+      <span class="prompt-btn" onclick="togglePrompt('jp-${esc(judgeEntry.agent_id)}-${Math.random().toString(36).slice(2,6)}')">show prompt</span>
+    </div>` : '';
+
+  const rounds = {};
+  for (const e of debateEntries) (rounds[e.round] ??= []).push(e);
+
+  panel.innerHTML = `
+    <h3>Turn · ${esc(turn.team)} · <span style="font-family:Georgia,serif">${esc(turn.action)}</span></h3>
+    ${judgeHtml}
+    ${Object.entries(rounds).map(([r, entries]) => `
+      <div class="d-round">
+        <h4>Round ${r}</h4>
+        ${entries.map((e, i) => {
+          const uid = `p-${r}-${i}-${Math.random().toString(36).slice(2, 8)}`;
+          return `<div class="d-entry">
+            <span class="d-name">${esc(e.agent_name)}</span><span class="d-prop">${esc(e.proposal)}</span>
+            ${e.justification ? `<div class="d-just">${esc(e.justification)}</div>` : ''}
+            <span class="prompt-btn" onclick="togglePrompt('${uid}')">show prompt</span>
+            <div class="prompt-box" id="${uid}">${esc(e.prompt)}</div>
+          </div>`;
+        }).join('')}
+      </div>`).join('')}`;
+}
+
+function togglePrompt(id) {
+  const box = document.getElementById(id);
+  box.classList.toggle('open');
+  box.previousElementSibling.textContent =
+    box.classList.contains('open') ? 'hide prompt' : 'show prompt';
+}
+
+/* ─── Util ─── */
+function esc(s) {
+  return s == null ? '' : String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+init();
+</script>
+</body>
+</html>

@@ -28,7 +28,6 @@ def apply_template(template_name: str, observation: str) -> str:
 
 
 def extract_boxed_action(raw: str) -> tuple[str, dict]:
-    """Extract action from \\boxed{} and report whether format was correct."""
     matches = re.findall(r"\\boxed\{(.*?)\}", raw)
     if matches:
         last = matches[-1].strip()
@@ -49,8 +48,7 @@ def get_hf_formatter(model_name: str, system_prompt: Optional[str] = None) -> Ca
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     def fmt(observation: str) -> str:
         messages = []
-        if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
+        if system_prompt: messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": observation})
         return tokenizer.apply_chat_template(
             messages,

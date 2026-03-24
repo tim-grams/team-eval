@@ -20,8 +20,7 @@ class BaseAgent(ABC):
         self.name = name or self.agent_id[:8]
 
     @abstractmethod
-    async def __call__(self, prompt: str) -> tuple[str, str]:
-        raise NotImplementedError("Subclasses must implement this method.")
+    async def __call__(self, prompt: str) -> tuple[str, str]: raise NotImplementedError("Subclasses must implement this method.")
 
 
 class VLLMAgent(BaseAgent):
@@ -55,6 +54,28 @@ class OllamaAgent(BaseAgent):
             response = await client.post(f"{self.server_url}/api/chat", json=payload)
             response.raise_for_status()
             completion = response.json()["message"]["content"]
+        return prompt, completion
+
+
+class OpenRouterAgent(BaseAgent):
+    def __init__(self, model_name: str, api_key: str, system_prompt: str = "",
+                 temperature: float | None = None, top_p: float | None = None, top_k: int | None = None,
+                 timeout: float = 300.0, name: str = ""):
+        super().__init__(model_name, "https://openrouter.ai", system_prompt, temperature, top_p, top_k, timeout, name)
+        self.api_key = api_key
+
+    async def __call__(self, prompt: str) -> tuple[str, str]:
+        messages = []
+        if self.system_prompt: messages.append({"role": "system", "content": self.system_prompt})
+        messages.append({"role": "user", "content": prompt})
+        payload = {"model": self.model_name, "messages": messages}
+        if self.temperature is not None: payload["temperature"] = self.temperature
+        if self.top_p is not None: payload["top_p"] = self.top_p
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        async with httpx.AsyncClient(timeout=self.timeout) as client:
+            response = await client.post(f"{self.server_url}/api/v1/chat/completions", json=payload, headers=headers)
+            response.raise_for_status()
+            completion = response.json()["choices"][0]["message"]["content"]
         return prompt, completion
 
 

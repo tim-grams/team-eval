@@ -1,43 +1,74 @@
-env: TicTacToeTeam-v0-train
-games: 200
-concurrency: 100
+env: BriscolaTeam-v0-train
+games: 3000
+concurrency: 200
 dry_run: false
 backend: vllm_actor
 template: hf
 
-actor:
-  num_slots: 4
-  num_gpus_per_slot: 1
-  max_model_len: 32000
-  max_num_seqs: 40
-  max_tokens: 30000
-  gpu_memory_utilization: 0.85
-  temperature: 0.7
-  top_p: 0.95
-  top_k: 50
+actors:
+  gpt-1:
+    model: openai/gpt-oss-20b
+    num_gpus: 1
+    max_model_len: 30000
+    max_num_seqs: 120
+    max_tokens: 25000
+    gpu_memory_utilization: 0.95
+    temperature: 0.7
+    top_p: 0.95
+    top_k: 50
+  gpt-2:
+    model: openai/gpt-oss-20b
+    num_gpus: 1
+    max_model_len: 30000
+    max_num_seqs: 120
+    max_tokens: 25000
+    gpu_memory_utilization: 0.95
+    temperature: 0.7
+    top_p: 0.95
+    top_k: 50
+  qwen3.5-1:
+    model: Qwen/Qwen3.5-27B
+    num_gpus: 1
+    max_model_len: 30000
+    max_num_seqs: 100
+    max_tokens: 25000
+    gpu_memory_utilization: 0.95
+    temperature: 0.7
+    top_p: 0.95
+    top_k: 50
+  qwen3.5-2:
+    model: Qwen/Qwen3.5-27B
+    num_gpus: 1
+    max_model_len: 30000
+    max_num_seqs: 100
+    max_tokens: 25000
+    gpu_memory_utilization: 0.95
+    temperature: 0.7
+    top_p: 0.95
+    top_k: 50
 
 team_sampler:
   sample: 'elo'
   teams:
-    Single:
+    SingleGPT:
       type: reflection
       rounds: 4
       agents:
         Robert: openai/gpt-oss-20b
-    Two:
+    TwoGPT:
       type: voting
       rounds: 2
       agents:
         Robert: openai/gpt-oss-20b
         Alice: openai/gpt-oss-20b
-    Three:
+    ThreeGPT:
       type: voting
       rounds: 2
       agents:
         Robert: openai/gpt-oss-20b
         Alice: openai/gpt-oss-20b
         Bob: openai/gpt-oss-20b
-    Four:
+    FourGPT:
       type: voting
       rounds: 2
       agents:
@@ -45,3 +76,35 @@ team_sampler:
         Alice: openai/gpt-oss-20b
         Bob: openai/gpt-oss-20b
         Carol: openai/gpt-oss-20b
+    SingleQwen:
+      type: reflection
+      rounds: 4
+      agents:
+        Robert: Qwen/Qwen3.5-27B
+    TwoQwen:
+      type: voting
+      rounds: 2
+      agents:
+        Robert: Qwen/Qwen3.5-27B
+        Alice: Qwen/Qwen3.5-27B
+    ThreeQwen:
+      type: voting
+      rounds: 2
+      agents:
+        Robert: Qwen/Qwen3.5-27B
+        Alice: Qwen/Qwen3.5-27B
+        Bob: Qwen/Qwen3.5-27B
+    FourQwen:
+      type: voting
+      rounds: 2
+      agents:
+        Robert: Qwen/Qwen3.5-27B
+        Alice: Qwen/Qwen3.5-27B
+        Bob: Qwen/Qwen3.5-27B
+        Carol: Qwen/Qwen3.5-27B
+    GPTQwen:
+      type: voting
+      rounds: 2
+      agents:
+        Robert: openai/gpt-oss-20b
+        Alice: Qwen/Qwen3.5-27B
