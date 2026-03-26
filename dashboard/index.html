@@ -611,12 +611,12 @@ tr:hover td { background: var(--hover); }
 <script>
 /* ─── API ─── */
 const api = {
-  results:    () => fetch('/api/results').then(r => r.json()),
-  ratings:    () => fetch('/api/ratings').then(r => r.json()),
-  envs:       () => fetch('/api/envs').then(r => r.json()),
-  envRatings: key => fetch(`/api/ratings/${encodeURIComponent(key)}`).then(r => r.json()),
-  games:      () => fetch('/api/games').then(r => r.json()),
-  game:       id => fetch(`/api/games/${encodeURIComponent(id)}`).then(r => r.json()),
+  results:    () => fetch('./data/results.json').then(r => r.json()),
+  ratings:    () => fetch('./data/ratings.json').then(r => r.json()),
+  envs:       () => fetch('./data/envs.json').then(r => r.json()),
+  envRatings: key => fetch(`./data/ratings/${encodeURIComponent(key)}.json`).then(r => r.json()),
+  games:      () => fetch('./data/games/index.json').then(r => r.json()),
+  game:       id => fetch(`./data/games/${encodeURIComponent(id)}.json`).then(r => r.json()),
 };
 
 /* ─── State ─── */

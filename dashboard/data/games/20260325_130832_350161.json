@@ -1,0 +1,342 @@
+{
+  "env_name": "ConnectFourTeam-v0-train",
+  "teams": {
+    "GROK-4.1-Fast-Reflection": [
+      {
+        "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+        "model": "x-ai/grok-4.1-fast"
+      }
+    ],
+    "GROK-4.1-Fast-Cooperation-3": [
+      {
+        "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+        "model": "x-ai/grok-4.1-fast"
+      },
+      {
+        "agent_id": "d05019c7-2923-4332-b449-c131c1932815",
+        "model": "x-ai/grok-4.1-fast"
+      },
+      {
+        "agent_id": "3bd63aa8-d4ab-4b3f-be35-3397cc210fa0",
+        "model": "x-ai/grok-4.1-fast"
+      }
+    ]
+  },
+  "winner": "GROK-4.1-Fast-Cooperation-3",
+  "forfeit": null,
+  "invalid_move": "GROK-4.1-Fast-Reflection",
+  "reason": "Team 0, Invalid action. Column 3 is full.",
+  "turns": [
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\n\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Center column for maximum future winning possibilities.",
+          "proposal": "[col 3]",
+          "justification": "Center column for maximum future winning possibilities."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\n\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Center column for maximum future winning possibilities.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Center column for maximum future winning possibilities.",
+          "proposal": "[col 3]",
+          "justification": "Center column for maximum future winning possibilities."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a stack in the center column to control the board and prepare for vertical four-in-a-row.",
+          "proposal": "[col 3]",
+          "justification": "Build a stack in the center column to control the board and prepare for vertical four-in-a-row."
+        },
+        {
+          "round": 1,
+          "agent_id": "d05019c7-2923-4332-b449-c131c1932815",
+          "agent_name": "Alice",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a stack in the center column to control the board and prepare for vertical connections.",
+          "proposal": "[col 3]",
+          "justification": "Build a stack in the center column to control the board and prepare for vertical connections."
+        },
+        {
+          "round": 1,
+          "agent_id": "3bd63aa8-d4ab-4b3f-be35-3397cc210fa0",
+          "agent_name": "Bob",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a stack in the center column to control the board's key area early.",
+          "proposal": "[col 3]",
+          "justification": "Build a stack in the center column to control the board's key area early."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [col 3]\nJUSTIFICATION: Build a stack in the center column to control the board and prepare for vertical four-in-a-row.\nAlice:\nACTION: [col 3]\nJUSTIFICATION: Build a stack in the center column to control the board and prepare for vertical connections.\nBob:\nACTION: [col 3]\nJUSTIFICATION: Build a stack in the center column to control the board's key area early.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Unanimous team consensus to stack in the central column (3) for board control and vertical win potential.",
+          "proposal": "[col 3]",
+          "justification": "Unanimous team consensus to stack in the central column (3) for board control and vertical win potential."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a strong vertical stack in the center column to set up for a quick vertical connect four.",
+          "proposal": "[col 3]",
+          "justification": "Build a strong vertical stack in the center column to set up for a quick vertical connect four."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . O . . .\n. . . X . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Build a strong vertical stack in the center column to set up for a quick vertical connect four.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continue building the vertical stack in the center for a quick vertical win, as opponent matched but cannot force a win before us.",
+          "proposal": "[col 3]",
+          "justification": "Continue building the vertical stack in the center for a quick vertical win, as opponent matched but cannot force a win before us."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a vertical stack to pursue a four-in-a-row win on the next turn.",
+          "proposal": "[col 3]",
+          "justification": "Build a vertical stack to pursue a four-in-a-row win on the next turn."
+        },
+        {
+          "round": 1,
+          "agent_id": "d05019c7-2923-4332-b449-c131c1932815",
+          "agent_name": "Alice",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a vertical stack in column 3 to threaten a win on the next turn (O on top of X-O-X).",
+          "proposal": "[col 3]",
+          "justification": "Build a vertical stack in column 3 to threaten a win on the next turn (O on top of X-O-X)."
+        },
+        {
+          "round": 1,
+          "agent_id": "3bd63aa8-d4ab-4b3f-be35-3397cc210fa0",
+          "agent_name": "Bob",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build stack in center column to set up vertical four-in-a-row potential.",
+          "proposal": "[col 3]",
+          "justification": "Build stack in center column to set up vertical four-in-a-row potential."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [col 3]\nJUSTIFICATION: Build a vertical stack to pursue a four-in-a-row win on the next turn.\nAlice:\nACTION: [col 3]\nJUSTIFICATION: Build a vertical stack in column 3 to threaten a win on the next turn (O on top of X-O-X).\nBob:\nACTION: [col 3]\nJUSTIFICATION: Build stack in center column to set up vertical four-in-a-row potential.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continuing the stack in column 3 builds towards a vertical four-in-a-row (O on top of X-O-X), creating a winning threat, as unanimously proposed by the team.",
+          "proposal": "[col 3]",
+          "justification": "Continuing the stack in column 3 builds towards a vertical four-in-a-row (O on top of X-O-X), creating a winning threat, as unanimously proposed by the team."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Build a vertical stack of 4 X's to win immediately.",
+          "proposal": "[col 3]",
+          "justification": "Build a vertical stack of 4 X's to win immediately."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . . . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Build a vertical stack of 4 X's to win immediately.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continue building vertical stack of 4 X's to win immediately.",
+          "proposal": "[col 3]",
+          "justification": "Continue building vertical stack of 4 X's to win immediately."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continue building the vertical stack in column 3; next move wins for Team 1.",
+          "proposal": "[col 3]",
+          "justification": "Continue building the vertical stack in column 3; next move wins for Team 1."
+        },
+        {
+          "round": 1,
+          "agent_id": "d05019c7-2923-4332-b449-c131c1932815",
+          "agent_name": "Alice",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continue building the stack in column 3 to force a vertical four-in-a-row on the next turn.",
+          "proposal": "[col 3]",
+          "justification": "Continue building the stack in column 3 to force a vertical four-in-a-row on the next turn."
+        },
+        {
+          "round": 1,
+          "agent_id": "3bd63aa8-d4ab-4b3f-be35-3397cc210fa0",
+          "agent_name": "Bob",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continue building the vertical stack in column 3 to connect four O's and win on the next turn.",
+          "proposal": "[col 3]",
+          "justification": "Continue building the vertical stack in column 3 to connect four O's and win on the next turn."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "88e75b4d-db2a-492b-99f8-3a2f0d087db2",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 1 in Connect Four.\nYour disc symbol: O.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . . . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [col 3]\nJUSTIFICATION: Continue building the vertical stack in column 3; next move wins for Team 1.\nAlice:\nACTION: [col 3]\nJUSTIFICATION: Continue building the stack in column 3 to force a vertical four-in-a-row on the next turn.\nBob:\nACTION: [col 3]\nJUSTIFICATION: Continue building the vertical stack in column 3 to connect four O's and win on the next turn.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Continue building the vertical stack in column 3; next move wins for Team 1.",
+          "proposal": "[col 3]",
+          "justification": "Continue building the vertical stack in column 3; next move wins for Team 1."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins with four X's vertically.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins with four X's vertically."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Column 3 wins with four X's vertically.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins immediately with four connected X's vertically.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins immediately with four connected X's vertically."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with four X's vertically.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins the game with four X's vertically."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with four X's vertically.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins immediately with four X's vertically.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins immediately with four X's vertically."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with four X's vertically.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins the game with four X's vertically."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with four X's vertically.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with four X's vertically.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins the game with four X's vertically."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GROK-4.1-Fast-Reflection",
+      "action": "[col 3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with vertical four in a row for X.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 wins the game with vertical four in a row for X."
+        },
+        {
+          "round": 2,
+          "agent_id": "d1b7bee0-7c69-4b96-833b-aea3d7e389d8",
+          "agent_name": "Robert",
+          "prompt": "You are in Team 0 in Connect Four.\nYour disc symbol: X.\nThe game board has 6 rows and 7 columns.\nTeams take turns dropping their disc into one of the columns (0 to 6).\nThe first to connect (their own) four discs vertically, horizontally, or diagonally wins.\nOn your turn, enter the column number in squared brackets to make your move.\nFor example: '[col 4]' or '[col 1]'.\n\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\nTeam 0 dropped their disk (X) into column 3.\nTeam 1 dropped their disk (O) into column 3.\n\nBoard state:\n0 1 2 3 4 5 6\n-------------\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n. . . O . . .\n. . . X . . .\n\nYour previous proposal (round 1/3):\nACTION: [col 3]\nJUSTIFICATION: Column 3 wins the game with vertical four in a row for X.\n\nYou may revise your action.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [col 3]\nJUSTIFICATION: Column 3 completes vertical four X's to win.",
+          "proposal": "[col 3]",
+          "justification": "Column 3 completes vertical four X's to win."
+        }
+      ]
+    }
+  ],
+  "final_ratings": {
+    "GROK-4.1-Fast-Reflection": 1007.8971893994758,
+    "GROK-4.1-Fast-Cooperation-3": 1064.9925000829205
+  }
+}

@@ -1,0 +1,462 @@
+{
+  "env_name": "BreakthroughTeam-v0-small-train",
+  "teams": {
+    "GPT-5.4-GROK-4.1-Fast": [
+      {
+        "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+        "model": "openai/gpt-5.4-nano"
+      },
+      {
+        "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+        "model": "x-ai/grok-4.1-fast"
+      }
+    ],
+    "GROK-4.1-Fast-Cooperation-3": [
+      {
+        "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+        "model": "x-ai/grok-4.1-fast"
+      },
+      {
+        "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+        "model": "x-ai/grok-4.1-fast"
+      },
+      {
+        "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+        "model": "x-ai/grok-4.1-fast"
+      }
+    ]
+  },
+  "winner": "GPT-5.4-GROK-4.1-Fast",
+  "forfeit": null,
+  "invalid_move": "GROK-4.1-Fast-Cooperation-3",
+  "reason": "That move does not follow the Breakthrough rules or is not your piece.",
+  "turns": [
+    {
+      "player_id": 0,
+      "team": "GPT-5.4-GROK-4.1-Fast",
+      "action": "[d2d3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\n\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . . . .\n 2 | W W W W W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [d2d3] [e2e3] [f2f3]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [a2a3]  \nJUSTIFICATION: Moves a white piece one step forward toward the win condition while keeping options open (no captures available on this board state).",
+          "proposal": "[a2a3]",
+          "justification": "Moves a white piece one step forward toward the win condition while keeping options open (no captures available on this board state)."
+        },
+        {
+          "round": 1,
+          "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+          "agent_name": "Alice",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\n\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . . . .\n 2 | W W W W W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [d2d3] [e2e3] [f2f3]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d2d3]\nJUSTIFICATION: Central advance to control the board's center and maintain flexibility for future captures or breakthroughs.",
+          "proposal": "[d2d3]",
+          "justification": "Central advance to control the board's center and maintain flexibility for future captures or breakthroughs."
+        },
+        {
+          "round": 2,
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\n\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . . . .\n 2 | W W W W W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [d2d3] [e2e3] [f2f3]\n\nYou are agent Robert debating with your teammates about the optimal next action. These are the current action proposals:\nRobert:\nACTION: [a2a3]\nJUSTIFICATION: Moves a white piece one step forward toward the win condition while keeping options open (no captures available on this board state).\nAlice:\nACTION: [d2d3]\nJUSTIFICATION: Central advance to control the board's center and maintain flexibility for future captures or breakthroughs.\n\nBased on the opinion of the other agents, you may revise your action proposal.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d2d3]\nJUSTIFICATION: Advancing the central file improves structure and future capture/breakthrough options; on this fully blocked row (no diagonal captures available), a central move is at least as strong as an edge advance.",
+          "proposal": "[d2d3]",
+          "justification": "Advancing the central file improves structure and future capture/breakthrough options; on this fully blocked row (no diagonal captures available), a central move is at least as strong as an edge advance."
+        },
+        {
+          "round": 2,
+          "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+          "agent_name": "Alice",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\n\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . . . .\n 2 | W W W W W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [d2d3] [e2e3] [f2f3]\n\nYou are agent Alice debating with your teammates about the optimal next action. These are the current action proposals:\nRobert:\nACTION: [a2a3]\nJUSTIFICATION: Moves a white piece one step forward toward the win condition while keeping options open (no captures available on this board state).\nAlice:\nACTION: [d2d3]\nJUSTIFICATION: Central advance to control the board's center and maintain flexibility for future captures or breakthroughs.\n\nBased on the opinion of the other agents, you may revise your action proposal.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d2d3]\nJUSTIFICATION: Central advance remains optimal for controlling key board center, enabling flexible diagonal captures and faster breakthrough potential compared to flank moves like [a2a3].",
+          "proposal": "[d2d3]",
+          "justification": "Central advance remains optimal for controlling key board center, enabling flexible diagonal captures and faster breakthrough potential compared to flank moves like [a2a3]."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\n\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . . . .\n 2 | W W W W W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [d2d3] [e2e3] [f2f3]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d2d3]\nJUSTIFICATION: Advancing the central file improves structure and future capture/breakthrough options; on this fully blocked row (no diagonal captures available), a central move is at least as strong as an edge advance.\nAlice:\nACTION: [d2d3]\nJUSTIFICATION: Central advance remains optimal for controlling key board center, enabling flexible diagonal captures and faster breakthrough potential compared to flank moves like [a2a3].\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d2d3]\nJUSTIFICATION: With no diagonal captures available on this blocked row, advancing the central file best preserves strong central control and gives the most flexible future breakthrough/capture options.",
+          "proposal": "[d2d3]",
+          "justification": "With no diagonal captures available on this blocked row, advancing the central file best preserves strong central control and gives the most flexible future breakthrough/capture options."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[d5d4]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [d5d4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Capture the advanced white pawn on d4 to eliminate the threat and open the center.",
+          "proposal": "[d5d4]",
+          "justification": "Capture the advanced white pawn on d4 to eliminate the threat and open the center."
+        },
+        {
+          "round": 1,
+          "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+          "agent_name": "Alice",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [d5d4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Capture White's advanced pawn on d4, removing their forward threat and opening center.",
+          "proposal": "[d5d4]",
+          "justification": "Capture White's advanced pawn on d4, removing their forward threat and opening center."
+        },
+        {
+          "round": 1,
+          "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+          "agent_name": "Bob",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [d5d4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Capture the advanced White pawn on d4, removing a key threat in the center.",
+          "proposal": "[d5d4]",
+          "justification": "Capture the advanced White pawn on d4, removing a key threat in the center."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B B B B\n 4 | . . . . . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [d5d4] [e5e4] [f5f4]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d5d4]\nJUSTIFICATION: Capture the advanced white pawn on d4 to eliminate the threat and open the center.\nAlice:\nACTION: [d5d4]\nJUSTIFICATION: Capture White's advanced pawn on d4, removing their forward threat and opening center.\nBob:\nACTION: [d5d4]\nJUSTIFICATION: Capture the advanced White pawn on d4, removing a key threat in the center.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Unanimously agreed capture of White's advanced pawn on d4 eliminates their central threat and opens the center for Black's advance.",
+          "proposal": "[d5d4]",
+          "justification": "Unanimously agreed capture of White's advanced pawn on d4 eliminates their central threat and opens the center for Black's advance."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GPT-5.4-GROK-4.1-Fast",
+      "action": "[d1d2]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d1d2]  \nJUSTIFICATION: Advancing the pawn toward the opponent\u2019s home row while keeping options open for future captures.",
+          "proposal": "[d1d2]",
+          "justification": "Advancing the pawn toward the opponent\u2019s home row while keeping options open for future captures."
+        },
+        {
+          "round": 1,
+          "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+          "agent_name": "Alice",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d3d4]\nJUSTIFICATION: Capture Black's pawn to open the d-file and promote next turn.",
+          "proposal": "[d3d4]",
+          "justification": "Capture Black's pawn to open the d-file and promote next turn."
+        },
+        {
+          "round": 2,
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nYou are agent Robert debating with your teammates about the optimal next action. These are the current action proposals:\nRobert:\nACTION: [d1d2]\nJUSTIFICATION: Advancing the pawn toward the opponent\u2019s home row while keeping options open for future captures.\nAlice:\nACTION: [d3d4]\nJUSTIFICATION: Capture Black's pawn to open the d-file and promote next turn.\n\nBased on the opinion of the other agents, you may revise your action proposal.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d1d2]\nJUSTIFICATION: Pushing from d1 to d2 keeps a strong central advance and preserves flexible forward/diagonal capture options, without allowing Black to immediately gain tempo.",
+          "proposal": "[d1d2]",
+          "justification": "Pushing from d1 to d2 keeps a strong central advance and preserves flexible forward/diagonal capture options, without allowing Black to immediately gain tempo."
+        },
+        {
+          "round": 2,
+          "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+          "agent_name": "Alice",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nYou are agent Alice debating with your teammates about the optimal next action. These are the current action proposals:\nRobert:\nACTION: [d1d2]\nJUSTIFICATION: Advancing the pawn toward the opponent\u2019s home row while keeping options open for future captures.\nAlice:\nACTION: [d3d4]\nJUSTIFICATION: Capture Black's pawn to open the d-file and promote next turn.\n\nBased on the opinion of the other agents, you may revise your action proposal.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d3d4]\nJUSTIFICATION: [d3d4] is legal (diagonal capture of Black's d4 pawn), opens d-file for immediate promotion threat next turn, superior to non-capturing advances.",
+          "proposal": "[d3d4]",
+          "justification": "[d3d4] is legal (diagonal capture of Black's d4 pawn), opens d-file for immediate promotion threat next turn, superior to non-capturing advances."
+        },
+        {
+          "round": 3,
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nYou are agent Robert debating with your teammates about the optimal next action. These are the current action proposals:\nRobert:\nACTION: [d1d2]\nJUSTIFICATION: Pushing from d1 to d2 keeps a strong central advance and preserves flexible forward/diagonal capture options, without allowing Black to immediately gain tempo.\nAlice:\nACTION: [d3d4]\nJUSTIFICATION: [d3d4] is legal (diagonal capture of Black's d4 pawn), opens d-file for immediate promotion threat next turn, superior to non-capturing advances.\n\nBased on the opinion of the other agents, you may revise your action proposal.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d1d2]\nJUSTIFICATION: Advancing to d2 keeps central pressure and avoids giving Black an immediate tempo or promotion line; it also preserves flexible capture options on the next move.",
+          "proposal": "[d1d2]",
+          "justification": "Advancing to d2 keeps central pressure and avoids giving Black an immediate tempo or promotion line; it also preserves flexible capture options on the next move."
+        },
+        {
+          "round": 3,
+          "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+          "agent_name": "Alice",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nYou are agent Alice debating with your teammates about the optimal next action. These are the current action proposals:\nRobert:\nACTION: [d1d2]\nJUSTIFICATION: Pushing from d1 to d2 keeps a strong central advance and preserves flexible forward/diagonal capture options, without allowing Black to immediately gain tempo.\nAlice:\nACTION: [d3d4]\nJUSTIFICATION: [d3d4] is legal (diagonal capture of Black's d4 pawn), opens d-file for immediate promotion threat next turn, superior to non-capturing advances.\n\nBased on the opinion of the other agents, you may revise your action proposal.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d3d4]\nJUSTIFICATION: Captures Black's advanced d4 pawn (legal diagonal move), opens d-file for promotion threat, superior central control vs Robert's non-capturing d1d2.",
+          "proposal": "[d3d4]",
+          "justification": "Captures Black's advanced d4 pawn (legal diagonal move), opens d-file for promotion threat, superior central control vs Robert's non-capturing d1d2."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W . W W\n 1 | W W W W W W\n     a b c d e f\nAvailable moves: [d1d2] [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d1d2]\nJUSTIFICATION: Advancing to d2 keeps central pressure and avoids giving Black an immediate tempo or promotion line; it also preserves flexible capture options on the next move.\nAlice:\nACTION: [d3d4]\nJUSTIFICATION: Captures Black's advanced d4 pawn (legal diagonal move), opens d-file for promotion threat, superior central control vs Robert's non-capturing d1d2.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d1d2]  \nJUSTIFICATION: [d3d4] is illegal because there is no white piece on d3 and, moreover, diagonal capture from d3 to d4 requires an opponent piece on d4 (while d4 is empty). Advancing [d1d2] is legal and keeps strong central pressure.",
+          "proposal": "[d1d2]",
+          "justification": "[d3d4] is illegal because there is no white piece on d3 and, moreover, diagonal capture from d3 to d4 requires an opponent piece on d4 (while d4 is empty). Advancing [d1d2] is legal and keeps strong central pressure."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[d6d5]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4] [d6d5]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d6d5]\nJUSTIFICATION: Recaptures the white pawn on d5, gaining material advantage and opening center control.",
+          "proposal": "[d6d5]",
+          "justification": "Recaptures the white pawn on d5, gaining material advantage and opening center control."
+        },
+        {
+          "round": 1,
+          "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+          "agent_name": "Alice",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4] [d6d5]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d6d5]\nJUSTIFICATION: Develops center pawn to challenge white's d3 pawn and opens diagonal capture options.",
+          "proposal": "[d6d5]",
+          "justification": "Develops center pawn to challenge white's d3 pawn and opens diagonal capture options."
+        },
+        {
+          "round": 1,
+          "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+          "agent_name": "Bob",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4] [d6d5]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d6d5]\nJUSTIFICATION: Central push developing the d-pawn while threatening the white pawn on d3.",
+          "proposal": "[d6d5]",
+          "justification": "Central push developing the d-pawn while threatening the white pawn on d3."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\n\nCurrent Board:\n 6 | B B B B B B\n 5 | B B B . B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4] [d6d5]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d6d5]\nJUSTIFICATION: Recaptures the white pawn on d5, gaining material advantage and opening center control.\nAlice:\nACTION: [d6d5]\nJUSTIFICATION: Develops center pawn to challenge white's d3 pawn and opens diagonal capture options.\nBob:\nACTION: [d6d5]\nJUSTIFICATION: Central push developing the d-pawn while threatening the white pawn on d3.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d6d5]\nJUSTIFICATION: Unanimously agreed team move; advances center pawn, threatens White's d3 pawn, and contests White's central control.",
+          "proposal": "[d6d5]",
+          "justification": "Unanimously agreed team move; advances center pawn, threatens White's d3 pawn, and contests White's central control."
+        }
+      ]
+    },
+    {
+      "player_id": 0,
+      "team": "GPT-5.4-GROK-4.1-Fast",
+      "action": "[a2a3]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d2d3]\nJUSTIFICATION: From d2, moving straight to d3 is legal and advances toward Black\u2019s home row while avoiding any immediate captures.",
+          "proposal": "[d2d3]",
+          "justification": "From d2, moving straight to d3 is legal and advances toward Black\u2019s home row while avoiding any immediate captures."
+        },
+        {
+          "round": 1,
+          "agent_id": "488be641-ed16-43f7-8656-11cc8ecfa3dc",
+          "agent_name": "Alice",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d2d3]\nJUSTIFICATION: Advance the pawn already on row 3 to reach row 4, threatening Black's pawn and progressing toward promotion.",
+          "proposal": "[d2d3]",
+          "justification": "Advance the pawn already on row 3 to reach row 4, threatening Black's pawn and progressing toward promotion."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "dc750d96-7fd8-4bd1-8e56-293d2ac9bfc9",
+          "agent_name": "Robert",
+          "prompt": "You are in Team White in a game of Breakthrough. You move up on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | . . . W . .\n 2 | W W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a2a3] [b2b3] [c2c3] [e2e3] [f2f3]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d2d3]\nJUSTIFICATION: From d2, moving straight to d3 is legal and advances toward Black\u2019s home row while avoiding any immediate captures.\nAlice:\nACTION: [d2d3]\nJUSTIFICATION: Advance the pawn already on row 3 to reach row 4, threatening Black's pawn and progressing toward promotion.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [a2a3]\nJUSTIFICATION: Pushing an available pawn from the left side advances it toward promotion with no capture available, while alternatives like [d2d3] would be impossible in the current position (no piece on d2).",
+          "proposal": "[a2a3]",
+          "justification": "Pushing an available pawn from the left side advances it toward promotion with no capture available, while alternatives like [d2d3] would be impossible in the current position (no piece on d2)."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[d5d4]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, reopening center file for black pawn on d6 to advance.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, reopening center file for black pawn on d6 to advance."
+        },
+        {
+          "round": 1,
+          "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+          "agent_name": "Alice",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, reopening center file and maintaining pressure toward white's home row.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, reopening center file and maintaining pressure toward white's home row."
+        },
+        {
+          "round": 1,
+          "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+          "agent_name": "Bob",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures the white pawn on d4, gaining material advantage and controlling the center.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures the white pawn on d4, gaining material advantage and controlling the center."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, reopening center file for black pawn on d6 to advance.\nAlice:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, reopening center file and maintaining pressure toward white's home row.\nBob:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures the white pawn on d4, gaining material advantage and controlling the center.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage, reopening center file, and advancing toward white's home row.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, gaining material advantage, reopening center file, and advancing toward white's home row."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[d5d4]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage and opening central file.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, gaining material advantage and opening central file."
+        },
+        {
+          "round": 1,
+          "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+          "agent_name": "Alice",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, reopening center file and maintaining pressure on white's advanced pawns.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, reopening center file and maintaining pressure on white's advanced pawns."
+        },
+        {
+          "round": 1,
+          "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+          "agent_name": "Bob",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, opening center file for pawn breakthrough to promotion.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, opening center file for pawn breakthrough to promotion."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage and opening central file.\nAlice:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, reopening center file and maintaining pressure on white's advanced pawns.\nBob:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, opening center file for pawn breakthrough to promotion.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, regaining material and reopening the central file for breakthrough.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, regaining material and reopening the central file for breakthrough."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[d5d4]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures the white pawn on d4, gaining material advantage and opening the center for further advances.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures the white pawn on d4, gaining material advantage and opening the center for further advances."
+        },
+        {
+          "round": 1,
+          "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+          "agent_name": "Alice",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, regaining central control and opening diagonal capture opportunity on c3.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, regaining central control and opening diagonal capture opportunity on c3."
+        },
+        {
+          "round": 1,
+          "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+          "agent_name": "Bob",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage and opening center.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, gaining material advantage and opening center."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures the white pawn on d4, gaining material advantage and opening the center for further advances.\nAlice:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, regaining central control and opening diagonal capture opportunity on c3.\nBob:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage and opening center.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage, opening the center, and creating diagonal capture threats.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, gaining material advantage, opening the center, and creating diagonal capture threats."
+        }
+      ]
+    },
+    {
+      "player_id": 1,
+      "team": "GROK-4.1-Fast-Cooperation-3",
+      "action": "[d5d4]",
+      "transcript": [
+        {
+          "round": 1,
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage and opening center control.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, gaining material advantage and opening center control."
+        },
+        {
+          "round": 1,
+          "agent_id": "6927b4fc-1659-45c2-b6bb-ec98b7244be3",
+          "agent_name": "Alice",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures the white pawn on d4, gaining material advantage and opening the center for further advances.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures the white pawn on d4, gaining material advantage and opening the center for further advances."
+        },
+        {
+          "round": 1,
+          "agent_id": "b5c76cd5-3995-4c73-a65b-72f109f5c82d",
+          "agent_name": "Bob",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, opening central file and maintaining pressure on white's advanced pawns.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4, opening central file and maintaining pressure on white's advanced pawns."
+        },
+        {
+          "round": 4,
+          "role": "judge",
+          "agent_id": "df3f63a7-b070-4752-ba20-7ca0cbe2a870",
+          "agent_name": "Robert",
+          "prompt": "You are in Team Black in a game of Breakthrough. You move down on an 6x6 board.\nIn your turn you can move a single piece one step forward or diagonally forward.\nA piece may only move diagonally if an opponent piece is there, and only move into such a preoccupied square in a diagonal step.\nWhen stepping into a square with an opponent piece, you capture it and the opponent's piece is removed permanently from the board.\nUse UCI-like notation in brackets, e.g. [a2a3] to move from a2 to a3.\n* 'a' corresponds to the leftmost column, '1' is the bottom row (from White's perspective).\n* Black's home row is the top row (row 6 for an 6x6). White's home row is the bottom row (row 1 for an 6x6).\nThe first team whose piece reaches the opponent's home row wins. If your team's pieces are all captured, you lose.\n\nTeam 0 moves [d2d3] (W).\nTeam 1 moves [d5d4] (B).\nTeam 0 moves [d1d2] (W).\nTeam 1 moves [d6d5] (B).\nTeam 0 moves [a2a3] (W).\n\nCurrent Board:\n 6 | B B B . B B\n 5 | B B B B B B\n 4 | . . . B . .\n 3 | W . . W . .\n 2 | . W W W W W\n 1 | W W W . W W\n     a b c d e f\nAvailable moves: [a5a4] [b5b4] [c5c4] [e5e4] [f5f4]\n\nAfter the debate, here are the team's final action proposals:\nRobert:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, gaining material advantage and opening center control.\nAlice:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures the white pawn on d4, gaining material advantage and opening the center for further advances.\nBob:\nACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4, opening central file and maintaining pressure on white's advanced pawns.\n\nAs the judge, select the single best action for the team.\nRespond in exactly this format:\nACTION: <your action>\nJUSTIFICATION: <short justification>",
+          "completion": "ACTION: [d5d4]\nJUSTIFICATION: Recaptures white pawn on d4 for material advantage, opens center control, and counters white's central push; unanimous team consensus.",
+          "proposal": "[d5d4]",
+          "justification": "Recaptures white pawn on d4 for material advantage, opens center control, and counters white's central push; unanimous team consensus."
+        }
+      ]
+    }
+  ],
+  "final_ratings": {
+    "GPT-5.4-GROK-4.1-Fast": 1110.7658585618374,
+    "GROK-4.1-Fast-Cooperation-3": 979.7460165932941
+  }
+}
