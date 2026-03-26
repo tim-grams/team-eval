@@ -2,8 +2,8 @@
 """Simple HTTP server for the Team Eval dashboard.
 
 Usage:
-    python dashboard/server.py
-    python dashboard/server.py --logs logs_pigdice --port 8081
+    python docs/server.py
+    python docs/server.py --logs logs_pigdice --port 8081
 """
 
 import csv

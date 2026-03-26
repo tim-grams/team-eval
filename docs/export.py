@@ -2,9 +2,9 @@
 """Export log data to static JSON files for GitHub Pages.
 
 Usage:
-    python dashboard/export.py
-    python dashboard/export.py --logs logs_pigdice
-    python dashboard/export.py --logs logs --out dashboard/data
+    python docs/export.py
+    python docs/export.py --logs logs_pigdice
+    python docs/export.py --logs logs --out docs/data
 """
 
 import csv
@@ -20,7 +20,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 def main():
     parser = argparse.ArgumentParser(description="Export log data to static JSON")
     parser.add_argument("--logs", default="logs", help="Log directory relative to project root (default: logs)")
-    parser.add_argument("--out", default="dashboard/data", help="Output directory relative to project root (default: dashboard/data)")
+    parser.add_argument("--out", default="docs/data", help="Output directory relative to project root (default: docs/data)")
     args = parser.parse_args()
 
     log_dir = (PROJECT_ROOT / args.logs).resolve()
