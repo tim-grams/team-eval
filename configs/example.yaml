@@ -1,0 +1,168 @@
+envs:
+  - TicTacToeTeam-v0-train
+  - ConnectFourTeam-v0-train
+  - BreakthroughTeam-v0-small-train
+games: 24
+concurrency: 200
+dry_run: false
+openrouter_api_key: ${OPENROUTER_API_KEY}
+error_allowance: 3
+
+temperature: 0.7
+top_p: 0.95
+timeout: 540.0
+
+actors:
+  GPT-OSS-Actor:
+    model: openai/gpt-oss-20b
+    num_gpus: 1
+    max_model_len: 30000
+    max_num_seqs: 120
+    max_tokens: 25000
+    gpu_memory_utilization: 0.95
+    temperature: 0.7
+    top_p: 0.95
+    top_k: 50
+  QWEN-3.5-Actor:
+    model: Qwen/Qwen3.5-27B
+    num_gpus: 1
+    max_model_len: 30000
+    max_num_seqs: 100
+    max_tokens: 25000
+    gpu_memory_utilization: 0.95
+    temperature: 0.7
+    top_p: 0.95
+    top_k: 50
+
+team_sampler:
+  sample: 'bradley_terry'
+  teams:
+    GPT-OSS-Reflection:
+      type: reflection
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-oss-20b
+          backend: vllm
+          template: hf
+    QWEN-3.5-Reflection:
+      type: reflection
+      rounds: 3
+      agents:
+        Robert: 
+          model: Qwen/Qwen3.5-27B
+          backend: vllm
+          template: hf
+    GPT-5.4-Nano-Reflection:
+      type: reflection
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+    GPT-5.4-Nano-Cooperation-2:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Alice:
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+    GPT-5.4-Nano-Cooperation-3:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Alice: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Bob: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+    GPT-5.4-Nano-Cooperation-4:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Alice: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Bob: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Charlie: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+    GROK-4.1-Fast-Reflection:
+      type: reflection
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GROK-4.1-Fast-Cooperation-2:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GROK-4.1-Fast-Cooperation-3:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Bob: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GROK-4.1-Fast-Cooperation-4:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Bob: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Charlie: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GPT-5.4-GROK-4.1-Fast:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false

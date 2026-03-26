@@ -48,7 +48,7 @@ async def main():
     # Build per-env samplers, restoring from saved state if present
     per_env_samplers: dict[str, BaseTeamSampler] = {}
     for env_name in envs:
-        sampler = build_team_sampler(cfg, teams)
+        sampler = build_team_sampler(cfg, teams, log_dir=args.log_dir, env_name=env_name)
         env_path = log_dir / env_state_filename(env_name)
         if env_path.exists():
             _, saved_ratings, saved_results = load_state(env_path)
@@ -57,7 +57,7 @@ async def main():
         per_env_samplers[env_name] = sampler
 
     # Global sampler aggregates results from all envs
-    global_sampler = build_team_sampler(cfg, teams)
+    global_sampler = build_team_sampler(cfg, teams, log_dir=args.log_dir)
     for sampler in per_env_samplers.values():
         global_sampler._results.extend(sampler._results)
 
@@ -73,6 +73,9 @@ async def main():
             runner = MatchRunner(env_name, [team0, team1], env_sampler, log_dir=args.log_dir,
                                  error_allowance=cfg.get("error_allowance", 0))
             log = await runner.run()
+            if log.get("discarded"):
+                print(f"[discarded] {env_name} | {team0.name} vs {team1.name} | network error")
+                return
             # Mirror outcome to global sampler
             winner = log["winner"]
             outcome = 0.5 if winner is None else (1.0 if winner == team0.name else 0.0)
@@ -104,9 +107,9 @@ async def main():
         ci_str = f"  [{ci[0]:.1f}, {ci[1]:.1f}]" if ci else ""
         print(f"  {rank}. {team_name:<20} {rating:.1f}{ci_str}")
 
-    if cfg.get("backend") == "vllm_actor":
+    pools = {id(a._pool): a._pool for t in teams for a in t.agents if hasattr(a, "_pool") and a._pool}
+    if pools:
         import ray
-        pools = {id(a._pool): a._pool for t in teams for a in t.agents if hasattr(a, "_pool") and a._pool}
         for pool in pools.values():
             loop = asyncio.get_event_loop()
             await asyncio.gather(*[

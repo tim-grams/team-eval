@@ -60,9 +60,10 @@ class OllamaAgent(BaseAgent):
 class OpenRouterAgent(BaseAgent):
     def __init__(self, model_name: str, api_key: str, system_prompt: str = "",
                  temperature: float | None = None, top_p: float | None = None, top_k: int | None = None,
-                 timeout: float = 300.0, name: str = ""):
+                 timeout: float = 300.0, name: str = "", reasoning: bool | None = None):
         super().__init__(model_name, "https://openrouter.ai", system_prompt, temperature, top_p, top_k, timeout, name)
         self.api_key = api_key
+        self.reasoning = reasoning
 
     async def __call__(self, prompt: str) -> tuple[str, str]:
         messages = []
@@ -71,6 +72,8 @@ class OpenRouterAgent(BaseAgent):
         payload = {"model": self.model_name, "messages": messages}
         if self.temperature is not None: payload["temperature"] = self.temperature
         if self.top_p is not None: payload["top_p"] = self.top_p
+        if self.reasoning is False: payload["reasoning"] = {"effort": "none"}
+        elif self.reasoning is True: payload["reasoning"] = {"enabled": True}
         headers = {"Authorization": f"Bearer {self.api_key}"}
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             response = await client.post(f"{self.server_url}/api/v1/chat/completions", json=payload, headers=headers)

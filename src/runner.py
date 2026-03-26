@@ -39,6 +39,7 @@ class MatchRunner:
         turns = []
         terminated = False
         forfeiting_pid = None
+        error_forfeit = False
         error_counts: dict[int, int] = {i: 0 for i in range(len(self.teams))}
         while not terminated:
             player_id, obs = env.get_observation()
@@ -52,11 +53,16 @@ class MatchRunner:
                 error_counts[player_id] += 1
                 if error_counts[player_id] > self.error_allowance:
                     forfeiting_pid = player_id
+                    error_forfeit = True
                     break
                 continue
             turns.append({"player_id": player_id, "team": team.name, "action": action, "transcript": transcript})
             terminated, _ = env.step(action)
         rewards, info = env.close()
+
+        if error_forfeit:
+            return {"env_name": self.env_name, "discarded": True}
+
         team0, team1 = self.teams[0], self.teams[1]
         elo0_before = self.sampler.get_rating(team0.name)
         elo1_before = self.sampler.get_rating(team1.name)

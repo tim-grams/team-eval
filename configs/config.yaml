@@ -1,0 +1,87 @@
+envs:
+  - TicTacToeTeam-v0-train
+  - ConnectFourTeam-v0-train
+  - BreakthroughTeam-v0-small-train
+games: 60
+concurrency: 200
+dry_run: false
+openrouter_api_key: ${OPENROUTER_API_KEY}
+error_allowance: 3
+
+temperature: 0.7
+top_p: 0.95
+timeout: 540.0
+
+actors: []
+
+team_sampler:
+  sample: 'bradley_terry'
+  teams:
+    GROK-4.1-Fast-Reflection:
+      type: reflection
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GROK-4.1-Fast-Cooperation-2:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GROK-4.1-Fast-Cooperation-3:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Bob: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GROK-4.1-Fast-Cooperation-4:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Bob: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+        Charlie: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false
+    GPT-5.4-GROK-4.1-Fast:
+      type: voting
+      rounds: 3
+      agents:
+        Robert: 
+          model: openai/gpt-5.4-nano
+          backend: openrouter
+          effort: low
+        Alice: 
+          model: x-ai/grok-4.1-fast
+          backend: openrouter
+          reasoning: false

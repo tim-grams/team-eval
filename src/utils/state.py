@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 
-_EXCLUDED_CFG_KEYS = {"games", "concurrency", "dry_run", "backend", "api_key", "temperature", "top_p", "timeout", "env", "envs", "error_allowance"}
+_EXCLUDED_CFG_KEYS = {"games", "concurrency", "dry_run", "backend", "api_key", "temperature", "top_p", "timeout", "env", "envs", "error_allowance", "team_sampler"}
 
 
 def env_state_filename(env_name: str) -> str:

@@ -5,7 +5,7 @@ import numpy as np
 from abc import ABC, abstractmethod
 
 
-def build_team_sampler(cfg: dict, teams: list) -> "BaseTeamSampler":
+def build_team_sampler(cfg: dict, teams: list, log_dir: str = "logs", env_name: str = "") -> "BaseTeamSampler":
     classes = {"random": RandomTeamSampler, "elo": EloTeamSampler, "bradley_terry": BradleyTerryTeamSampler}
     sampler_type = cfg.get("team_sampler", {}).get("sample", "random")
     cls = classes.get(sampler_type)
@@ -80,8 +80,31 @@ class BradleyTerryTeamSampler(BaseTeamSampler):
     def __init__(self, teams: list, initial_rating: float = 1000.0):
         super().__init__(teams, initial_rating)
         self._ci: dict[str, tuple[float, float]] = {}
+        self._all_pairs: list[tuple[str, str]] = [
+            (a.name, b.name)
+            for i, a in enumerate(teams)
+            for b in teams[i + 1:]
+        ]
+        # Counts games already sampled (in-flight or pending) in the current session
+        self._sampled_counts: dict[str, int] = {t.name: 0 for t in teams}
 
-    def sample_match(self) -> tuple: return tuple(random.sample(self.teams, 2))
+    def _effective_game_counts(self) -> dict[str, int]:
+        """Per-team game counts: completed results + in-flight samples."""
+        counts = dict(self._sampled_counts)
+        for t0, t1, _ in self._results:
+            counts[t0] += 1
+            counts[t1] += 1
+        return counts
+
+    def sample_match(self) -> tuple:
+        game_counts = self._effective_game_counts()
+        min_score = min(game_counts[a] + game_counts[b] for a, b in self._all_pairs)
+        candidates = [(a, b) for a, b in self._all_pairs if game_counts[a] + game_counts[b] == min_score]
+        a_name, b_name = random.choice(candidates)
+        self._sampled_counts[a_name] += 1
+        self._sampled_counts[b_name] += 1
+        team_by_name = {t.name: t for t in self.teams}
+        return tuple(random.sample([team_by_name[a_name], team_by_name[b_name]], 2))
 
     def _fit_bt(self, results: list) -> dict[str, float]:
         """Fit Bradley-Terry via MM algorithm. Returns raw strengths β_i (geometric mean = 1)."""

@@ -398,6 +398,83 @@ tr:hover td { background: var(--hover); }
 }
 
 
+/* ── Win Rates ── */
+.wr-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.wr-selector {
+  border: 1px solid var(--border);
+  padding: 0.8rem;
+  align-self: start;
+}
+
+.wr-selector h3 {
+  font-size: 0.74rem;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.wr-sel-actions { margin-bottom: 0.6rem; font-size: 0.76rem; }
+.wr-sel-actions a {
+  color: var(--muted); text-decoration: underline;
+  cursor: pointer; text-underline-offset: 2px; margin-right: 0.5rem;
+}
+
+.wr-check-item {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.18rem 0; font-size: 0.83rem;
+}
+
+.wr-matrix-wrap { overflow-x: auto; }
+
+.wr-matrix { border-collapse: collapse; font-size: 0.82rem; }
+
+.wr-matrix thead th {
+  text-align: center;
+  padding: 0.3rem 0.6rem;
+  border-bottom: 2px solid var(--border);
+  font-weight: normal;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.wr-matrix thead th.wr-corner {
+  border-bottom: 2px solid var(--border);
+  border-right: 2px solid var(--border);
+}
+
+.wr-matrix td {
+  text-align: center;
+  padding: 0.42rem 0.8rem;
+  border: 1px solid #eee8d8;
+  min-width: 64px;
+  font-variant-numeric: tabular-nums;
+}
+
+.wr-matrix td.wr-label {
+  text-align: right;
+  padding-right: 0.9rem;
+  color: var(--text);
+  font-size: 0.78rem;
+  border: none;
+  border-right: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.wr-matrix td.wr-self { background: var(--hover); color: var(--muted); }
+
 /* ── Modal ── */
 .modal-overlay {
   position: fixed;
@@ -485,7 +562,7 @@ tr:hover td { background: var(--hover); }
 <body>
 
 <header>
-  <h1>Team Eval</h1>
+  <h1>TeamArena</h1>
   <nav id="nav"></nav>
 </header>
 
@@ -505,6 +582,23 @@ tr:hover td { background: var(--hover); }
   </section>
 
 </main>
+
+<!-- ── Win Rates ── -->
+<section id="view-wr" class="hidden">
+  <div class="wr-layout">
+    <div class="wr-selector">
+      <h3>Teams</h3>
+      <div class="wr-sel-actions">
+        <a onclick="wrSelectAll(true)">All</a>
+        <a onclick="wrSelectAll(false)">None</a>
+      </div>
+      <div id="wr-checks"></div>
+    </div>
+    <div class="wr-matrix-wrap">
+      <div id="wr-matrix-container"></div>
+    </div>
+  </div>
+</section>
 
 <!-- ── Debate modal ── -->
 <div class="modal-overlay hidden" id="debate-modal">
@@ -553,6 +647,14 @@ async function init() {
   lbTab.addEventListener('click', e => { e.preventDefault(); showTab('lb'); });
   nav.appendChild(lbTab);
 
+  // Win Rates tab
+  allTabs.push('wr');
+  const wrTab = document.createElement('a');
+  wrTab.href = '#'; wrTab.className = 'tab'; wrTab.id = 'tab-wr';
+  wrTab.textContent = 'Win Rates';
+  wrTab.addEventListener('click', e => { e.preventDefault(); showTab('wr'); });
+  nav.appendChild(wrTab);
+
   // Build per-env leaderboard blocks, tabs, and game sections
   const lbEnvBlocks = document.getElementById('lb-env-blocks');
   const main = document.getElementById('main');
@@ -591,6 +693,7 @@ async function init() {
       </section>`);
   }
 
+  initWinRates();
   renderLeaderboard(null, 'lb-total-stats', 'lb-total-body', ratings);
   for (const env of envs) {
     renderLeaderboard(env.name, `lb-${env.key}-stats`, `lb-${env.key}-body`, envRatings[env.key] || {});
@@ -612,7 +715,7 @@ function showTab(name) {
     document.getElementById(`view-${n}`).classList.toggle('hidden', n !== name);
   });
 
-  if (name !== 'lb' && !initialized.has(name)) {
+  if (name !== 'lb' && name !== 'wr' && !initialized.has(name)) {
     const env = envs.find(e => e.key === name);
     renderGamesList(name, env ? env.name : name, `${name}-list`, `${name}-detail`);
     initialized.add(name);
@@ -1114,6 +1217,97 @@ function togglePrompt(id) {
   box.classList.toggle('open');
   box.previousElementSibling.textContent =
     box.classList.contains('open') ? 'hide prompt' : 'show prompt';
+}
+
+/* ─── Win Rates ─── */
+function initWinRates() {
+  const teamNames = [...new Set(results.flatMap(r => [r.team0, r.team1]))].sort();
+  const checksEl = document.getElementById('wr-checks');
+  for (const name of teamNames) {
+    const id = `wr-chk-${name}`;
+    checksEl.insertAdjacentHTML('beforeend', `
+      <div class="wr-check-item">
+        <input type="checkbox" id="${esc(id)}" value="${esc(name)}" checked onchange="renderWinRateMatrix()">
+        <label for="${esc(id)}">${esc(name)}</label>
+      </div>`);
+  }
+  renderWinRateMatrix();
+}
+
+function wrSelectAll(checked) {
+  document.querySelectorAll('#wr-checks input[type=checkbox]').forEach(cb => cb.checked = checked);
+  renderWinRateMatrix();
+}
+
+function renderWinRateMatrix() {
+  const sel = [...document.querySelectorAll('#wr-checks input:checked')].map(cb => cb.value);
+  const container = document.getElementById('wr-matrix-container');
+
+  if (sel.length < 2) {
+    container.innerHTML = '<div class="empty" style="padding:1rem">Select at least 2 teams.</div>';
+    return;
+  }
+
+  const sections = [{ label: 'Total', rows: results }];
+  for (const env of envs) sections.push({ label: env.name, rows: filteredResults(env.name) });
+
+  container.innerHTML = sections.map(({ label, rows }) =>
+    `<div class="lb-block">
+      <h2>${esc(label)}</h2>
+      ${buildWrTable(sel, rows)}
+    </div>`
+  ).join('');
+}
+
+function buildWrTable(sel, rows) {
+  const selSet = new Set(sel);
+  const wins = {}, total = {};
+  for (const r of rows) {
+    if (!selSet.has(r.team0) || !selSet.has(r.team1)) continue;
+    const a = r.team0, b = r.team1;
+    if (!wins[a]) wins[a] = {};
+    if (!wins[b]) wins[b] = {};
+    if (!total[a]) total[a] = {};
+    if (!total[b]) total[b] = {};
+    total[a][b] = (total[a][b] || 0) + 1;
+    total[b][a] = (total[b][a] || 0) + 1;
+    if (r.winner === a)      wins[a][b] = (wins[a][b] || 0) + 1;
+    else if (r.winner === b) wins[b][a] = (wins[b][a] || 0) + 1;
+  }
+
+  const header = `<tr>
+    <th class="wr-corner" style="text-align:right;padding-right:0.9rem">↓ vs →</th>
+    ${sel.map(n => `<th>${esc(n)}</th>`).join('')}
+  </tr>`;
+
+  const tableRows = sel.map(row => {
+    const cells = sel.map(col => {
+      if (row === col) return `<td class="wr-self">—</td>`;
+      const t = (total[row] && total[row][col]) || 0;
+      if (t === 0) return `<td style="color:var(--muted)">—</td>`;
+      const w = (wins[row] && wins[row][col]) || 0;
+      const wr = w / t;
+      const bg = wrCellColor(wr);
+      const textColor = wr > 0.72 || wr < 0.28 ? '#fff' : 'var(--text)';
+      return `<td style="background:${bg};color:${textColor}" title="${w}W / ${t}G">${(wr * 100).toFixed(1)}%</td>`;
+    }).join('');
+    return `<tr><td class="wr-label">${esc(row)}</td>${cells}</tr>`;
+  }).join('');
+
+  return `<table class="wr-matrix"><thead>${header}</thead><tbody>${tableRows}</tbody></table>`;
+}
+
+function wrCellColor(wr) {
+  // bg = #fffff8 = [255,255,248]; win = #1e5c14; loss = #7a1a1a
+  const bg = [255, 255, 248];
+  const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+  if (wr >= 0.5) {
+    const t = (wr - 0.5) * 2;
+    return `rgb(${lerp(bg[0], 30, t)},${lerp(bg[1], 92, t)},${lerp(bg[2], 20, t)})`;
+  } else {
+    const t = (0.5 - wr) * 2;
+    return `rgb(${lerp(bg[0], 122, t)},${lerp(bg[1], 26, t)},${lerp(bg[2], 26, t)})`;
+  }
 }
 
 /* ─── Util ─── */

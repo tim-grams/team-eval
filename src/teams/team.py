@@ -11,45 +11,67 @@ _TEAM_CLASSES = {"voting": lambda: VotingTeam, "reflection": lambda: ReflectionT
 def build_teams_from_cfg(cfg: dict, log_dir: str = "logs") -> list:
     def _make_team(team_cls, agents, team_info, team_id, team_name):
         return team_cls(agents=agents, debate_rounds=team_info.get("rounds", 1), team_id=team_id, name=team_name, log_dir=log_dir)
+
     team_cfg = cfg["team_sampler"]["teams"]
-    backend = cfg.get("backend", "vllm")
-    if backend == "vllm_actor":
-        from src.agents.vllm_actor import VLLMActorPool, VLLMActorAgent
+    global_kwargs = {k: cfg[k] for k in ("temperature", "top_p", "timeout") if k in cfg}
+
+    # Determine if any agent uses vllm backend (needs actor pool)
+    def _agent_backend(agent_cfg) -> str:
+        if isinstance(agent_cfg, dict): return agent_cfg.get("backend", "vllm")
+        return "vllm"
+
+    has_vllm = any(
+        _agent_backend(agent_cfg) == "vllm"
+        for team_info in team_cfg.values()
+        for agent_cfg in team_info["agents"].values()
+    )
+
+    pool = None
+    if has_vllm and "actors" in cfg:
+        from src.agents.vllm_actor import VLLMActorPool
         import ray
         ray.init(ignore_reinit_error=True)
         pool = VLLMActorPool(cfg["actors"], log_dir=log_dir)
-        template = cfg.get("template", "default")
-        return [_make_team(
-                    _TEAM_CLASSES[team_info.get("type", "voting")](),
-                    [VLLMActorAgent(model_name=model, pool=pool, template=template, name=agent_name)
-                     for agent_name, model in team_info["agents"].items()],
-                    team_info, team_id, team_name,
-                )
-                for team_id, (team_name, team_info) in enumerate(team_cfg.items())]
-    if backend == "openrouter":
-        import os
-        from src.agents.agent import OpenRouterAgent
-        raw_key = cfg.get("api_key", "${OPENROUTER_API_KEY}")
-        api_key = os.path.expandvars(raw_key)
-        kwargs = {k: cfg[k] for k in ("temperature", "top_p", "top_k", "timeout") if k in cfg}
-        return [_make_team(
-                    _TEAM_CLASSES[team_info.get("type", "voting")](),
-                    [OpenRouterAgent(model_name=model, api_key=api_key, name=agent_name, **kwargs)
-                     for agent_name, model in team_info["agents"].items()],
-                    team_info, team_id, team_name,
-                )
-                for team_id, (team_name, team_info) in enumerate(team_cfg.items())]
-    from src.agents.agent import VLLMAgent, OllamaAgent
-    backends = {"vllm": VLLMAgent, "ollama": OllamaAgent}
-    agent_cls = backends[backend]
-    kwargs = {k: cfg[k] for k in ("temperature", "top_p", "top_k", "timeout") if k in cfg}
-    return [_make_team(
-                _TEAM_CLASSES[team_info.get("type", "voting")](),
-                [agent_cls(model_name=model, server_url=cfg["server_url"], name=agent_name, **kwargs)
-                 for agent_name, model in team_info["agents"].items()],
-                team_info, team_id, team_name,
-            )
-            for team_id, (team_name, team_info) in enumerate(team_cfg.items())]
+
+    openrouter_key = None
+    def _get_openrouter_key() -> str:
+        nonlocal openrouter_key
+        if openrouter_key is None:
+            import os
+            raw_key = cfg.get("openrouter_api_key", "${OPENROUTER_API_KEY}")
+            openrouter_key = os.path.expandvars(raw_key)
+        return openrouter_key
+
+    def _build_agent(agent_name: str, agent_cfg) -> BaseAgent:
+        if isinstance(agent_cfg, str):
+            model_name, backend, template, reasoning = agent_cfg, "vllm", cfg.get("template", "default"), None
+        else:
+            model_name = agent_cfg["model"]
+            backend = agent_cfg.get("backend", "vllm")
+            template = agent_cfg.get("template", cfg.get("template", "default"))
+            reasoning = agent_cfg.get("reasoning")
+
+        if backend == "vllm":
+            from src.agents.vllm_actor import VLLMActorAgent
+            return VLLMActorAgent(model_name=model_name, pool=pool, template=template, name=agent_name)
+        if backend == "openrouter":
+            from src.agents.agent import OpenRouterAgent
+            kwargs = dict(global_kwargs)
+            if reasoning is not None: kwargs["reasoning"] = reasoning
+            return OpenRouterAgent(model_name=model_name, api_key=_get_openrouter_key(), name=agent_name, **kwargs)
+        # Legacy plain vllm/ollama via server_url
+        from src.agents.agent import VLLMAgent, OllamaAgent
+        agent_cls = {"plain_vllm": VLLMAgent, "ollama": OllamaAgent}[backend]
+        return agent_cls(model_name=model_name, server_url=cfg["server_url"], name=agent_name, **global_kwargs)
+
+    return [
+        _make_team(
+            _TEAM_CLASSES[team_info.get("type", "voting")](),
+            [_build_agent(agent_name, agent_cfg) for agent_name, agent_cfg in team_info["agents"].items()],
+            team_info, team_id, team_name,
+        )
+        for team_id, (team_name, team_info) in enumerate(team_cfg.items())
+    ]
 
 
 class BaseTeam(ABC):
